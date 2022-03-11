@@ -1,0 +1,3 @@
+edition = "2021"
+format_strings = true
+fn_single_line = false

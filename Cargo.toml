@@ -1,0 +1,85 @@
+[package]
+name = "rust-starter"
+version = "1.0.0"
+autobins = true
+authors = ["ArmanRiazi <arman2riazi@gmail.com>"]
+edition = "2021"
+repository = "https://github.com/armanriazi/myrust-testbed"
+readme = "README.md"
+license = "MIT"
+#keywords = ["cli", "starter"]
+description = """
+Rust Starter aims to provide high quality components to bootstrap your Rust CLI Project. It includes a battery of most used libraries; and defines a set of Rust best practices.
+"""
+
+[workspace]
+members = [
+    #"utils",
+    #"cli",
+    #"core",
+    "examples_packtpub-learn-rust-in-7-days",
+    "examples-egg",
+    "examples-rust-doc",
+    "examples-rust-in-action",
+    "examples-tourofrust",
+]
+
+[dependencies]
+examples_packtpub-learn-rust-in-7-days = { path = "examples_packtpub-learn-rust-in-7-days" }
+examples-egg = { path = "examples-egg"}
+examples-rust-doc = { path = "examples-rust-doc"}
+examples-rust-in-action = { path = "examples-rust-in-action"}
+examples-tourofrust = { path = "examples-tourofrust"}
+
+
+# core = { path = "core" }
+human-panic = "1.0.3"
+better-panic = "0.3.0"
+log = "0.4.11"
+slog-scope = "4.3.0"
+slog-stdlog = "4.1.0"
+num = "0.4.0"
+regex = "1"
+clap = "3.1.5"
+
+[dev-dependencies]
+assert_cmd = "2.0.4"
+predicates = "2.1.1"
+
+[[bin]]
+name = "cool-tool"
+path="./src/bin/"
+test = true
+bench = false
+
+[profile.dev]
+opt-level=0
+debug = true
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 4
+
+[profile.release]
+opt-level=3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+
+[profile.test]
+opt-level = 1
+debug = true
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 4
+
+[profile.bench]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
