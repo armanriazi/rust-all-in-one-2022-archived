@@ -7,3 +7,4 @@ fn main() {
 
   let b: f32 = unsafe { std::mem::transmute(frankentype) };   // <4>
   println!("{}", b);                                          // <4>
+}

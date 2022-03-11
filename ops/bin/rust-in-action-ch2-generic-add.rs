@@ -1,8 +1,5 @@
 use std::ops::{Add};
 
-fn add<T: Add<Output = T>>(i: T, j: T) -> T {
-  i + j
-}
 
 fn main() {
   let (a, b) = (1.2, 3.4);
@@ -13,4 +10,8 @@ fn main() {
 
   println!("{} + {} = {}", a, b, c);
   println!("{} + {} = {}", x, y, z);
+}
+
+fn add<T: Add<Output = T>>(i: T, j: T) -> T {
+  i + j
 }

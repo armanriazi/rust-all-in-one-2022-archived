@@ -5,6 +5,7 @@ fn str_slice(arg: &str){
 fn mystr(arg : String){
     println!("{}",arg);
 }
+
 fn main(){
     
     str_slice("blue");
