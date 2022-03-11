@@ -17,19 +17,19 @@ members = [
     #"utils",
     #"cli",
     #"core",
-    "examples_packtpub-learn-rust-in-7-days",
-    "examples-egg",
-    "examples-rust-doc",
-    "examples-rust-in-action",
-    "examples-tourofrust",
+    #"examples_packtpub-learn-rust-in-7-days",
+    #"examples-egg",
+    #"examples-rust-doc",
+    #"examples-rust-in-action",
+    #"examples-tourofrust",
 ]
 
 [dependencies]
-examples_packtpub-learn-rust-in-7-days = { path = "examples_packtpub-learn-rust-in-7-days" }
-examples-egg = { path = "examples-egg"}
-examples-rust-doc = { path = "examples-rust-doc"}
-examples-rust-in-action = { path = "examples-rust-in-action"}
-examples-tourofrust = { path = "examples-tourofrust"}
+#examples_packtpub-learn-rust-in-7-days = { path = "examples_packtpub-learn-rust-in-7-days" }
+#examples-egg = { path = "examples-egg"}
+#examples-rust-doc = { path = "examples-rust-doc"}
+#examples-rust-in-action = { path = "examples-rust-in-action"}
+#examples-tourofrust = { path = "examples-tourofrust"}
 
 
 # core = { path = "core" }
