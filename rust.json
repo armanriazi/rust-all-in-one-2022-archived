@@ -1,0 +1,256 @@
+{
+	// Place your snippets for rust here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+
+	"Main function with err handle": {
+		"prefix": "mb.main",
+		"body": [
+			"use std::num::ParseIntError;",
+			"fn main() -> Result<(), ParseIntError>{",
+			"   let item=func()?;",
+			"   $1",
+			"   ok(())",
+			"}"			
+		],
+		"description": "Range pattern, BK REF here matches 1 and 2; partially unstable. 🚧"
+	},
+	"Pattern range": {
+		"prefix": "ml.pr..",
+		"body": [
+			"1..3 => {pr$1}",
+			"$2"
+		],
+		"description": "Range pattern, BK REF here matches 1 and 2; partially unstable. 🚧"
+	},
+	"@Pattern binding": {
+		"prefix": "ml.pb@..",
+		"body": [
+			"x @ 1..=$1 => {pr$2}",
+			"$3"
+		],
+		"description": "Bind matched to x; pattern binding, BK EX REF here x would be 1, 2, … or 5."
+	},
+	 "Print to console": {
+	 	"prefix": "mylog",
+	 	"body": [
+	 		"console.log('$1');",
+	 		"$2"
+	 	],
+	 	"description": "Log output to console"
+	 },
+	"Let to let": {
+	   "prefix": "mb.letlet",
+	   "body": [
+		   "let $1 = {let $2 = $3;let $4 = $5;$6};",
+		   "$7"
+	   ],
+	   "description": "block expressian without func"
+   },   
+
+
+
+
+   "Println fmt macro": {
+	"prefix": "ml.pr",
+	"body": [
+		"println!('Printed:{$1}','$2');",
+		"$3"
+	],
+	"description": "print formated to console"
+	},   
+	"Define Macro": {
+	"prefix": "mb.ma",
+	"body": [
+		"mod  macros {",
+		    "#[macro_export]",
+			"macro_rules! $1{",
+			"($val:expr)=>{",
+			"};",
+		"$2",
+		"}"
+
+	],
+	"description": "Macro defination"
+	},
+
+
+
+
+   "Static lifetime": {
+	  "prefix": "ml.'stat",
+	  "body": [
+		  "static mut $1: &'static str = '$2';",
+		  "$3"
+	  ],
+	  "description": "stdin"
+    }  ,
+  
+
+
+
+
+	"Identifier": {
+		"prefix": "ml.le",
+		"body": [
+			"let $1:$2 = $3;",
+			"$4"
+		],
+		"description": "An identifier, for example in let x = 0; the identifier is x."
+	} ,
+
+
+
+
+
+
+	"Test_Block": {
+		"prefix": "mb.test",
+		"body": [
+			"#[cfg(test)]",
+			"mod tests {",
+			"    use super::*;",			   				
+			"    #[test]",
+			"    fn $1(){",
+			"       $2",
+			"    }",
+			"}"
+
+		],
+		"description": "Whole test unit block"
+	},
+		  
+
+   "Meta": {
+	  "prefix": "ml.meta",
+	  "body": [
+		  "#![$1]",
+		  "$2"
+	  ],
+	  "description": "A meta item; the things that go inside #[...] and #![...] attributes."
+    },
+	"Cfg": {
+	   "prefix": "ml.cfg",
+	   "body": [
+		   "#[cfg($1)]",
+		   "$2"
+	   ],
+	   "description": "example #[cfg(test)]"
+   },
+   "Test": {
+	  "prefix": "ml.testmeta",
+	  "body": [
+		  "#[test]",
+		  "$1"
+	  ],
+	  "description": "test with fun def"
+    },
+    "Assert_eq!": {
+	 "prefix": "ml.asseq",
+	 "body": [
+		 "assert_eq!($1)",
+		 "$2"
+	 ],
+	 "description": "assert equal"
+    },
+    "Assert!": {
+		"prefix": "ml.ass",
+		"body": [
+			"assert!($1)",
+			"$2"
+		],
+		"description": "assert(bool)"
+    },
+
+
+	"ParseIntError": {
+		"prefix": "ms.parseerror",
+		"body": [
+			"use std::num::ParseIntError;",
+			"fn func(item: &str) -> Result<i32, ParseIntError> {",
+			"   let item = item.parse::<i32>()?;",
+			"}",
+			"#[test]",
+			"fn test_func_item_valid() {",
+			"    assert_eq!(func('1'), Ok(1));",
+			"}",
+			"#[test]",
+			"fn test_func_item_invalid() {",
+			"    assert_eq!(",
+			"    func('beep boop').unwrap_err().to_string(),",
+			"    'invalid digit found in string'",
+			"   );",
+			"}"			
+		],
+		"description": "Todo Later sth"
+	  },
+  	"PartialEq No Attribute": {
+		"prefix": "ms.partialeq.withou.attr",
+		"body": [
+			"use std::error;",
+			"impl PartialEq for StructName {",
+			"     fn eq(&self, other: &Self) -> bool {",
+			"        self.item == other.item",
+			"     }",
+		    "}",						
+			"assert!(var1 == var2);"
+		],
+		"description": "Partial Equal Implement Method"
+	  },
+	  "PartialEq With Attribute": {
+		"prefix": "ms.partialeq.with.attr",
+		"body": [
+			"use std::error;",
+			"#[derive(PartialEq)]",
+			"enum EnumName {",    		
+			"}",
+		    "struct StructName {",    		
+			"}",
+			"impl PartialEq for StructName {",
+			"     fn eq(&self, other: &EnumName) -> bool {",
+			"        self.format == *other",
+			"     }",
+		    "}",						
+			"assert!(var1 == var2::enumItem);",
+			"assert_eq!(var1.eq(&var2),true);"			
+		],
+		"description": "Partial Equal Implement Method"
+	  },
+	  "Unwrap Panic": {
+		"prefix": "mb.unwrap.panic",
+		"body": [
+			"fn func(item: Option<&str>) {",				
+			"    let item = item.unwrap();",
+			"    if item == '$1' { panic!('$2''); }",			
+			"}"
+		],
+		"description": "Option Unwrap Panic None"
+	  },
+   "todo": {
+	  "prefix": "mytodo",
+	  "body": [
+		  "// TODO:$1",
+		  "$2"
+	  ],
+	  "description": "Todo Later sth"
+    },
+
+
+
+
+
+
+
+  "IO/IN": {
+		"prefix": "ml.ioin",
+		"body": [
+			"io::stdin().read_line(&mut $1);",
+			"$2"
+		],
+		"description": "stdin"
+    }  
+ 
+
+}
