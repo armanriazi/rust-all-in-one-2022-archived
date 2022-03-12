@@ -1,5 +1,5 @@
 fn main() {
-    let tuple = (1, 2, 3);
+    let tuple = (1, 2, 3);//or : let (t0,t1,t2) = (1, 2, 3);
     println!("tuple = ({}, {}, {})", tuple.0, tuple.1, tuple.2);
 
     match tuple {

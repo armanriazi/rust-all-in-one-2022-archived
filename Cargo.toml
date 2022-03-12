@@ -25,6 +25,7 @@ members = [
 ]
 
 [dependencies]
+#subproject = { path = "./subproject" }
 #examples_packtpub-learn-rust-in-7-days = { path = "examples_packtpub-learn-rust-in-7-days" }
 #examples-egg = { path = "examples-egg"}
 #examples-rust-doc = { path = "examples-rust-doc"}

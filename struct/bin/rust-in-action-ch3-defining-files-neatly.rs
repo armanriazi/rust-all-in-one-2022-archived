@@ -12,9 +12,9 @@ impl File {
     }
   }
   
-  // fn len(&self) -> usize {  // <3> `File::len()` takes an implicit argument `self`. You'll notice that there is no explicit argument provided on line 25. 
-  //   self.data.len() // <4> `usize` is the type returned by `Vec<T>::len()`, which is sent directly through to the caller
-  // }
+  fn len(&self) -> usize {  // <3> `File::len()` takes an implicit argument `self`. You'll notice that there is no explicit argument provided on line 25. 
+    self.data.len() // <4> `usize` is the type returned by `Vec<T>::len()`, which is sent directly through to the caller
+  }
 }
 
 fn main() {
@@ -22,8 +22,9 @@ fn main() {
   
   let f3_name = &f3.name; // <5> Fields are private by default, but can be accessed within the module that defines the struct. The module system is discussed further on in the chapter. 
  //let f3_length = f3.len();
+ //let f3_length = File::len(&f3);
  let f3_length = f3.data.len();
   
-  println!("{:?}", f3);
+  println!("{:?}",f3);
   println!("{} is {} bytes long", f3_name, f3_length);
 }

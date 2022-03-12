@@ -1,18 +1,31 @@
-use std::ops::{Add};
-
-
-fn main() {
-  let (a, b) = (1.2, 3.4);
-  let (x, y) = (10, 20);
-
-  let c = add(a,b);
-  let z = add(x,y);
-
-  println!("{} + {} = {}", a, b, c);
-  println!("{} + {} = {}", x, y, z);
+enum BookFormat {
+  Paperback,
+  Hardback,
+  Ebook,
 }
 
-fn add<T: Add<Output = T>>(i: T, j: T) -> T {
-  i + j
+struct Book {
+  isbn: i32,
+  format: BookFormat,
 }
 
+impl PartialEq for Book {
+  fn eq(&self, other: &Self) -> bool {
+      self.isbn == other.isbn
+  }
+}
+
+fn main(){}
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+  #[test]
+  fn test(){
+      let b1 = Book { isbn: 3, format: BookFormat::Paperback };
+      let b2 = Book { isbn: 3, format: BookFormat::Ebook };
+      let b3 = Book { isbn: 10, format: BookFormat::Paperback };
+      assert!(b1 == b2);
+      assert!(b1 != b3);
+  }
+}

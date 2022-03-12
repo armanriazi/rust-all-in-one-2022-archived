@@ -10,20 +10,24 @@ trait Talk {
 	fn talk(&self) -> ();
 }
 
+
 impl Talk for Cat {
 	fn talk(&self) {
+    println!("{}",self.0.age);
 		println!("Meow");
 	}
 }
 
 impl Talk for Dog {
 	fn talk(&self) {
+    println!("{}",self.0.age);
 		println!("Woof!");
 	}
 }
 
 impl Talk for LoudDog {
 	fn talk(&self) {
+    println!("{}",self.0.age);
 		println!("WOOF!!");
 	}
 }
@@ -39,3 +43,4 @@ fn main() {
 	max.talk();
 	neighbours_dog.talk();
 }
+

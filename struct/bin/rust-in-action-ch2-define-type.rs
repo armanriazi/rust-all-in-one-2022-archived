@@ -12,6 +12,12 @@ impl Counter {
   }
 }
 
+impl Default for Counter {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 fn main() {
    let mut counter = Counter::new();
 
