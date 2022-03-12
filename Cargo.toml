@@ -4,7 +4,7 @@ version = "1.0.0"
 autobins = true
 authors = ["ArmanRiazi <arman2riazi@gmail.com>"]
 edition = "2021"
-repository = "https://github.com/armanriazi/myrust-testbed"
+repository = "https://github.com/armanriazi/rust-all-in-one"
 readme = "README.md"
 license = "MIT"
 #keywords = ["cli", "starter"]
@@ -46,6 +46,7 @@ clap = "3.1.5"
 [dev-dependencies]
 assert_cmd = "2.0.4"
 predicates = "2.1.1"
+proptest = "1.0.0"
 
 #[[bin]]
 #name = "cool-tool"

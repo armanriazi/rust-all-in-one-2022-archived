@@ -1,31 +1,34 @@
-enum BookFormat {
-  Paperback,
-  Hardback,
-  Ebook,
-}
+#![no_main]
 
-struct Book {
-  isbn: i32,
-  format: BookFormat,
+pub fn add<T: std::ops::Add<Output = T>>(a: T, b: T) -> T {
+  a + b
 }
+fn parse_date(s: &str) -> Option<(u32, u32, u32)> {
+  if 10 != s.len() { return None; }
+  if "-" != &s[4..5] || "-" != &s[7..8] { return None; }
 
-impl PartialEq for Book {
-  fn eq(&self, other: &Self) -> bool {
-      self.isbn == other.isbn
-  }
+  let year = &s[0..4];
+  let month = &s[6..7];
+  let day = &s[8..10];
+
+  year.parse::<u32>().ok().and_then(
+      |y| month.parse::<u32>().ok().and_then(
+          |m| day.parse::<u32>().ok().map(
+              |d| (y, m, d))))
 }
-
-fn main(){}
 
 #[cfg(test)]
 mod tests {
   use super::*;
-  #[test]
-  fn test(){
-      let b1 = Book { isbn: 3, format: BookFormat::Paperback };
-      let b2 = Book { isbn: 3, format: BookFormat::Ebook };
-      let b3 = Book { isbn: 10, format: BookFormat::Paperback };
-      assert!(b1 == b2);
-      assert!(b1 != b3);
+  use proptest::prelude::*;
+  proptest! {
+     // #[test]
+      /*fn test_add(a: i64, b: i64) {
+          assert_eq!(add(a, b), a+b);
+      }*/
+      #[test]
+    fn doesnt_crash(s in "\\PC*") {
+        parse_date(&s);
+    }
   }
 }
