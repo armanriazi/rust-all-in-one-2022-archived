@@ -40,14 +40,14 @@ fn open(f: &mut File) -> Result<File, String> {
   if one_in_(10_000) {
     return Err(String::from("Permission denied"))
   }
-  Some(f)
+  Ok(*f)
 }
 
 fn close(f: &mut File) -> Result<File, String> {
   if one_in_(100_000) {
     return Err(String::from("Interrupted by signal!"))
   }
-  Some(f)
+  Ok(*f)
 }
 
 fn main() {

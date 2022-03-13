@@ -22,9 +22,11 @@ fn main() {
     let b = Point{x:30,y:50};
 
     let c = a + b ;
+    let d = a.add(b) ;
 
 
     println!("c = {:?}",c);
+    println!("c = {:?}",d);
     println!("a = {:?}",a);
     
 

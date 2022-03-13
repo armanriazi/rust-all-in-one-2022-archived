@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::env::args;
 
+//args:usize
 fn main() {
 
     let mut hm = HashMap::new();
@@ -20,6 +21,7 @@ fn main() {
 
 
 fn get_arg(n:usize)->Result<String,String>{
+    //yields pairs (i, val)
     for (i,a) in args().enumerate(){
         if i == n{
             return Ok(a);
