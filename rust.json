@@ -4,35 +4,367 @@
 	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
 	// same ids are connected.
 	// Example:
+	"Attrs": {
+		"prefix": "ms.attr",
+		"body": [
+			"#[allow(unused_variables)]",
+			"#[derive(Debug,PartialEq,Eq)]",
+			"$1"
+		],
+		"description": "Most used attributes"
+    }  ,
 
+	"Implement io::read": {
+		"prefix": "mb.imp.io.read",
+		"body": [
+			"use std::io;",
+			"impl io::Read for $1 {",
+			"fn read(&mut self, _buf: &mut [u8]) -> io::Result<usize> {",
+			"   $2",
+			"}"
+		],
+		"description": "Function Read Return Result<usize>"
+	  },
+	  "Implement new struc constructor": {
+		"prefix": "mb.imp.new",
+		"body": [		
+			"use std::error;",
+			"//#[derive(PartialEq, Debug)]",
+			"struct $1(u64);",			
+			"impl $2 {",
+				"fn new(value: i64) -> Result<$3, CreationError> {",
+				"   if value == 0 {",
+				"       Err(CreationError::field1)",
+				"   } else if value < 0 {",
+				"       Err(CreationError::field2)",
+				"   } else {",
+				"       Ok($4(value as u64))",
+				"          }",
+				"   }",
+			    "}",
+				"//Implement CreationError",
+				"mb.imp.error.self$5",
+		],
+		"description": "$1-$4  is the same name"
+	  },
+	  "Implement Error Customize": {
+		"prefix": "mb.imp.error.self",
+		"body": [		
+			    "//use std::error;",
+				"impl error::Error for $1 {",
+				"     fn description(&self) -> &str {",
+				"                     match *self {",
+				"                     $2::field1 => '',",
+				"                     $3::field2 => '',",
+				"                     }",
+			    "      }",
+				"}",
+				"enum CreationError {",
+				"     field1,",
+				"     field2,",
+				"}",
+		],
+		"description": "$1-$3  is the same name"
+	  },
+	  	  
+
+
+	
+
+
+
+
+	  
+
+
+
+
+	"todo": {
+		"prefix": "ml.todo",
+		"body": [
+			"// TODO:$1",
+			"$2"
+		],
+		"description": "Todo Later sth"
+	  },  
+	  "To Report Bug": {
+		"prefix": "ml.torepobug",
+		"body": [
+			"// TO_REPORT_BUG:$1 *GrepperHelp:$2 *BecauseOf(-):$3 *BecauseOf(?):-$4",
+			"$5"
+		],
+		"description": "For help and cached possible bugs "
+	  },  
 	"Main function with err handle": {
 		"prefix": "mb.main",
 		"body": [
-			"use std::num::ParseIntError;",
-			"fn main() -> Result<(), ParseIntError>{",
+			"use std::io::Error;",
+			"fn main() -> Result<(), Error>{",
 			"   let item=func()?;",
 			"   $1",
-			"   ok(())",
+			"   Ok(())",
 			"}"			
 		],
-		"description": "Range pattern, BK REF here matches 1 and 2; partially unstable. 🚧"
+		"description": "Range pattern, BK REF here matches 1 and 2; partially unstable. 🚧"		
 	},
+	"While until time specific": {
+		"prefix": "ms.time.while",
+		"body": [
+		"use std::time::{Duration, Instant};",
+		"let mut count = 0;",
+		"let time_limit = Duration::new(10,0);",
+    	"let start = Instant::now();", 
+    	"while (Instant::now() - start) < time_limit {",
+	    "    count += 1;",        
+    	"}"
+		],
+		"description": "It isn’t an ideal method for implementing benchmarks"		
+	},	
 	"Pattern range": {
-		"prefix": "ml.pr..",
+		"prefix": "ml.p.range..",
 		"body": [
 			"1..3 => {pr$1}",
 			"$2"
 		],
-		"description": "Range pattern, BK REF here matches 1 and 2; partially unstable. 🚧"
+		"description": "_exclusive range  pattern, BK REF here matches 1 and 2; partially unstable. 🚧"
 	},
+	"Getting value option of some": {
+		"prefix": "ml.option.val",
+		"body": [
+			"if let Some(value) = optional_value {",
+			"   println!($1{}$2, value);",
+			"}"
+		],
+		"description": "Or you can try 'let' in while"
+	},	
+	"Destructure struct": {
+		"prefix": "ml.destruct",
+		"body": [
+			"let Point { x: $1, y: $2 } = point;",
+			"$3"
+		],
+		"description": "using a `let` binding"
+	},
+	"Generate random": {
+		"prefix": "ml.rand1",
+		"body": [
+			"rand::random::<$1u8>()",
+			"$2"
+		],
+		"description": "cargo add rand"
+	},	
+	"Generate random call fun": {
+		"prefix": "ml.rand2",
+		"body": [
+			"use rand::random;",
+			"$1random()",			
+		],
+		"description": "cargo add rand"
+	},	
 	"@Pattern binding": {
-		"prefix": "ml.pb@..",
+		"prefix": "ml.patt.binding@..",
 		"body": [
 			"x @ 1..=$1 => {pr$2}",
 			"$3"
 		],
-		"description": "Bind matched to x; pattern binding, BK EX REF here x would be 1, 2, … or 5."
+		"description": "inclusive range Bind matched to x; pattern binding, BK EX REF here x would be 1, 2, … or 5."
 	},
+	"Pattern Right": {
+		"prefix": "ms.patt.right..",
+		"body": [
+			"struct Point {",
+			"       x: f32,",
+			"       y: f32,",
+			"}",
+			"let p: Point = Point { x: q, y: z };",
+			"let r = Point { x: w, ..point};"
+		],
+		"description": "{ x, ..p}- ..p Return z or y value"
+	} ,
+	"Transmute": {
+		"prefix": "ms.mem.tran",
+		"body": [
+			"use std::mem;",
+			"let ($1a,$2b): ($3i32, $4i32) = unsafe {",
+			"    (mem::transmute(x), mem::transmute(y))",
+			"};"
+		],
+		"description": "Transmute unsafe memory"
+	} ,	
+	"Find word": {
+		"prefix": "ms.str.find.line",
+		"body": [
+			"for line in quote.lines() { ",
+			"    if line.contains(search_term) {",			
+			"   }",
+			" }"
+		],
+		"description": "Find line in lines"
+	} ,
+	
+
+	"Vec in vec key value": {
+		"prefix": "ms.vecinvec.enum",
+		"body": [			
+    		"let mut v: Vec<Vec<(usize, String)>> = vec![];",            
+    		"for (i, line) in v.lines().enumerate() {",
+      		"if  {",        	
+ 			"     let v = Vec::with_capacity(num);",
+        	"     v.push(i);",
+      		"    }",
+			"}"    
+		],
+		"description": "where T is a pair of values of type (usize, String)"
+	} ,
+	
+	
+
+
+	"Error codes from a global variable": {
+		"prefix": "ms.util.errorglobal.unsafe",
+		"body": [			
+		"static mut ERROR: i32 = 0;",
+ 		" unsafe {",
+		"   if ERROR != 0 {",
+		"      panic!($1An error has occurred while closing the file $2)",
+		"   }",
+		" }"		
+		],
+		"description": "where T is a pair of values of type (usize, String)"
+	} ,	
+	"Partial Eq On Struct": {
+		"prefix": "ms.util.eqstruct",
+		"body": [
+			"#[derive(PartialEq)]",
+    		"impl PartialEq for Structname {",
+				"fn eq(&self, other: &Self) -> bool {",
+				"   self.field1 == other.field1",
+				"  }",
+				"}"
+		],
+		"description": "assert_eq!(b1.eq(&b2),false); assert!(b1 == b2);"
+	} ,
+	"Partial Eq On Enum": {
+		"prefix": "ms.util.eqwithenum",
+		"body": [
+			"#[derive(PartialEq)]",
+			"impl PartialEq<EnumName> for StructName {",
+			"    fn eq(&self, other: &EnumName) -> bool {",
+			"       self.EnumFieldName == *other",
+			"  }",
+			"}"
+		],
+		"description": " assert!(b1 == StructName::EnumFieldName); assert!(b1 == b2);"
+	} ,	
+	"Counter": {
+		"prefix": "ms.util.counteri32",
+		"body": [			
+    		"  struct Counter {",
+			"   value: i32,",
+			"  }",			
+			"  impl Counter {",
+			"  type Output=Counter;",
+			"  fn new() -> Self::Output {",
+			"   Counter { value: 0 }",
+			"  }",			
+			"  fn incr(&mut self) {",
+			"    self.value += 1;",
+			"   }",
+			"  fn dec(&mut self) {",
+			"    self.value -= 1;",
+			"   }",
+			"  }"
+		
+		],
+		"description": " let mut counter = Counter::new();counter.incr();"
+	} ,
+	"Operaor": {
+		"prefix": "ms.util.calc",
+		"body": [			
+    		"use std::ops::*;",
+			"fn add<T: std::ops::Add<Output = T>>(i: T, j: T) -> T {",
+  			"   i.add(j)",
+			"}",
+			"fn <T: Sub<Output = T>>(i: T, j: T) -> T {",
+  			"   i-j",
+			"}",
+		],
+		"description": " let mut counter = Counter::new();counter.incr();"
+	} ,
+
+
+	"Clap run buy param": {
+		"prefix": "ms.app.clap",
+		"body": [						
+			"use clap::{App,Arg};",			
+			"  let args = App::new()",
+			" .version()",
+			" .about()",
+			" .arg(Arg::with_name('pattern')",
+			"   .help()",
+			"   .takes_value(true)",
+			"   .required(true))",
+			" .get_matches();",			
+			"  let pattern = args.value_of('pattern').unwrap();",
+		],
+		"description": "Supporting command-line arguments exmp: cargo run -- patternvalue and then ./target/debug/grep-lite --help "
+	} ,
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  "Copy/Clone/Imp strategy": {
+		"prefix": "ms.rc.mut",
+		"body": [
+			"use std::copy::Copy;",
+			"use std::clone::Clone;",
+			"impl Copy for StatusMessage { }",						
+			"impl Clone for StatusMessage {",
+			"  fn clone(&self) -> Self {",
+			"     *self",
+			"  }",
+		],
+		"description": "With impl no need to use .clone()"
+	} ,	
+	"Warp type mutable": {
+		"prefix": "ms.rc.mut",
+		"body": [
+			"use std::rc::Rc;",
+			"use std::cell::RefCell;",
+			"   let base: Rc<RefCell<YourStruct>> = Rc::new(RefCell::new(",
+			"   YourStruct {",
+			"     x: 87.65",
+			"   }",
+			"  ));",					
+			"  {",
+			"   //Interior scope in main scope",
+			"   let mut base_2 = base.borrow_mut();",
+			"   base_2.x -= 12.34;",
+			"   println!($1base_2: {:?}$2, base_2);",
+			"  }",
+			"   println!($3base: {:?}$4, base);",
+		],
+		"description": "wrapper type = reference-counted value = shared ownership =track valid references.Rc<T> does not allow mutation. To permit that, we need to wrap our wrapper. Rc<RefCell<T>>"
+	} ,	
+	"Generic Operators Traits": {
+		"prefix": "ms.gen.opr",
+		"body": [
+		"use std::ops::{$1};", 		
+ 		"fn $2<T: $3<Output = T>>(i: T, j: T) -> T {",
+   		"     i.$4(j)",
+ 		"}",
+		],
+		"description": "a trait bound = T: $3<Output = T>>. During the compilation process, a + b is converted to a.add(b)"
+	} ,	
 	 "Print to console": {
 	 	"prefix": "mylog",
 	 	"body": [
@@ -56,8 +388,8 @@
    "Println fmt macro": {
 	"prefix": "ml.pr",
 	"body": [
-		"println!('Printed:{$1}','$2');",
-		"$3"
+		"println!($1Printed:{:?}$2,$3);",
+		"$4"
 	],
 	"description": "print formated to console"
 	},   
@@ -75,7 +407,20 @@
 	],
 	"description": "Macro defination"
 	},
-
+	"Trait Skeleton": {
+		"prefix": "mb.trait",
+		"body": [
+			 "trait $1Name { ",         
+			  "fn $2name(self: &Self, $3: &mut $4Vec<>) -> Result<$5usize, String>;",
+			  "}",
+			  "#[allow(unused_variables)]",
+			  "impl $6Name for $7StructName {",
+			  "fn $8name(){",
+			  " Ok(())",
+			  "}",
+		],
+		"description": "Trait block"
+	} ,	
 
 
 
@@ -90,8 +435,15 @@
   
 
 
-
-
+	
+	"CONST EPSILON": {
+		"prefix": "ml.const.EPSILON",
+		"body": [
+			"assert!($1your_absolute_difference <= f32::EPSILON);",
+			"$2"
+		],
+		"description": "Equal zero float handled"
+	} ,
 	"Identifier": {
 		"prefix": "ml.le",
 		"body": [
@@ -100,14 +452,77 @@
 		],
 		"description": "An identifier, for example in let x = 0; the identifier is x."
 	} ,
-
-
-
-
-
+	"Slice string": {
+		"prefix": "ml.string.slice",
+		"body": [
+			"&String::from($1)[0..$2]",
+			"$3"
+		],
+		"description": "Array String Slice"
+	} ,
+	"Format Hex Clike Cast Print": {
+		"prefix": "ml.format.clike.hex",
+		"body": [
+			"println!($1roses are #{:06x}$2, Color::Red as i32);",
+			"$3"
+		],
+		"description": "Format Hex Clike Cast Print"
+	} ,
+	"UnImplemented": {
+		"prefix": "ms.unimp",
+		"body": [
+			"#[allow(dead_code)]",
+			"fn read(f: &mut File, save_to: &mut Vec<u8>) -> ! { ",
+			"   unimplemented!()",
+			"}"
+		],
+		"description": "Return Nothing ! no ()"
+	} ,	
+	"Explicit Use Crate": {
+		"prefix": "ms.use.explicit.reduce.path",
+		"body": [
+			"use crate::Status::{X, Y};",
+			"let status = X;",			
+		],
+		"description": "Exmp Union sth::sth reduced to just sth"
+	} ,
+	"Memory Address &Size Memory": {
+		"prefix": "ms.mem.addr.get",
+		"body": [
+			"let uc_address = uc_slice as *const UsageCounter as usize;",
+			"let size_of_uc = std::mem::size_of::<UsageCounter>();",	
+		],
+		"description": "Return addr of a struct_slice"
+	} ,
+	"Memory  OverWrite to a address mem": {
+		"prefix": "ms.mem.addr.get",
+		"body": [
+			"unsafe {",
+			"  std::ptr::write(uc_addr as *mut usize, 0usize);",
+			"}"
+		],
+		"description": "Unsafe OverWrite 0 to addr"
+	} ,
+	
+	"Memory capacity of value": {
+		"prefix": "ms.mem.size",
+		"body": [
+			"let xs: [i32; 5] = [1, 2, 3, 4, 5];",
+			"ml.pr$1 mem::size_of_val(&xs));",			
+		],
+		"description": "Return num of bytes"
+	} ,
+	"String to_owned": {
+		"prefix": "ml.string.to_owned",
+		"body": [
+			"let $1  = $2::$3($4my text.to_owned())",				
+			"$5",
+		],
+		"description": "Expected struct `String`, found `&str`"
+	} ,
 
 	"Test_Block": {
-		"prefix": "mb.test",
+		"prefix": "mb.testunit",
 		"body": [
 			"#[cfg(test)]",
 			"mod tests {",
@@ -120,6 +535,24 @@
 
 		],
 		"description": "Whole test unit block"
+	},
+	"Test_Proptest Block": {
+		"prefix": "mb.testpropunit",
+		"body": [
+			"#[cfg(test)]",			
+			"mod tests {",
+			"use super::*;",			   				
+			"use proptest::prelude::*;",
+			"proptest! {",
+			"    #[test]",
+			"    fn $1(){",
+			"       $2",
+			"    }",
+			"  }",
+			"}"
+
+		],
+		"description": "PropTest Framework: Whole test unit Proptest block with proptest! macro"
 	},
 		  
 
@@ -163,7 +596,108 @@
 		],
 		"description": "assert(bool)"
     },
+	
 
+
+
+	  "Unwrap Panic": {
+		"prefix": "mb.unwrap.panic",
+		"body": [
+			"fn func(item: Option<&str>) {",				
+			"    let item = item.unwrap();",
+			"    if item == '$1' { panic!('$2''); }",			
+			"}"
+		],
+		"description": "Option Unwrap Panic None"
+	  },
+
+
+
+	  "Sparkle char": {
+		"prefix": "ms.char.spec.heart",
+		"body": [
+			"let sparkle_heart = vec![240, 159, 146, 150];",
+			"let sparkle_heart = String::from_utf8_lossy(&sparkle_heart);",		 
+			"println!($1{}$2, sparkle_heart);",
+			"$3"
+		],
+		"description": "Heart as byte-char"
+    }  ,
+	"IO/USE/FILE": {
+		"prefix": "ml.io.use.file",
+		"body": [
+			"use std::fs::File;",			
+			"$1"
+		],
+		"description": "Using file"
+    }  ,
+	"IO/USE": {
+		"prefix": "ml.io.use",
+		"body": [			
+			"use std::io::BufReader;",
+			"use std::io::prelude::*",
+			"$1"
+		],
+		"description": "Using BufReader"
+    }  ,
+	"IO/BUF/Empty/NEED/FILLUP": {
+		"prefix": "ml.buf.lossy",
+		"body": [
+			"let mut buffer:Vec<u8>=vec![];",
+			"let did_read=read(&file, &mut buffer);",
+			"let text=String::from_utf8_lossy(&buffer));"
+		],
+		"description": "Myself buf array empty needs to fillup"
+    }  ,
+    "IO/IN": {
+		"prefix": "ml.io.in",
+		"body": [
+			"io::stdin().read_line(&mut $1);",
+			"$2"
+		],
+		"description": "stdin"
+    }  ,
+	"IO/READ": {
+		"prefix": "ml.io.read.dyn",
+		"body": [		
+			    "&mut dyn io::BufRead",
+		],
+		"description": "Dynamic Read for onvert to binary"
+	  },	
+	  "IO/READER/NEW": {
+		"prefix": "ml.io.read.new",
+		"body": [		
+			    "let mut $1 = io::BufReader::new($2yourstr.as_bytes());",
+		],
+		"description": "New for convert to binary"
+	  },	
+	  "IO/READER/DEBINARY": {
+		"prefix": "ml.io.read.line",
+		"body": [		
+			    "$1yourbinaryvariable.read_line(&mut $2forexmp_str_var)?;",
+		],
+		"description": "Get DeBinary"
+	  },	
+	  
+	  
+	  "If let Some": {
+		"prefix": "ms.if.let.some",
+		"body": [
+			"let $1 = Some(String::from($2));",	  
+			"if let Some(value) = $3 {",
+			"}"
+		],
+		"description": "$1-$3 is similar name.Make this an if let statement whose value is 'Some' type"
+	  }	  ,
+	  "While let Some": {
+		"prefix": "ms.while.let.some",
+		"body": [
+			"while let Some(Some(value)) = $1vec.pop() {",	  
+			"      ml.pr$2",
+			"}"
+		],
+		"description": "make this a while let statement - remember that vector.pop also adds another layer of Option<T>.\nYou can stack `Option<T>`'s into while let and if let"
+	  },	      
 
 	"ParseIntError": {
 		"prefix": "ms.parseerror",
@@ -186,8 +720,52 @@
 		],
 		"description": "Todo Later sth"
 	  },
+
+
+
+
+	  
+	  "HashMap": {
+		"prefix": "ms.hashmap",
+		"body": [
+			"use std::collections::HashMap;",
+			"let mut hm = HashMap::new();",
+			"hm.insert(1 ,$1Hello$2);",	    
+			"let r = hm.get(&4).unwrap_or(&'NoString');",
+		],
+		"description": "Default algo SipHash 1-3,The hashing algo can be replaced on a per-HashMap basis using the [default], [with_hasher], and [with_capacity_and_hasher] method-using #[derive(PartialEq, Eq, Hash)]. If you implement these yourself, it is important that the following property holds: k1 == k2 -> hash(k1) == hash(k2) In other words, if two keys are equal, their hashes must be equal."
+	  },
+	  "Match as kind of option": {
+		"prefix": "ms.match.option",
+		"body": [
+			"match var {",
+			"   Some('sth') => ml.pr,",
+			"   Some(inner)   => ,",
+			"   None          => ,",
+			"}"
+		],
+		"description": "inner is new important-Match Option"
+	  },
+	  "Implement for dsiplay": {
+		"prefix": "ms.impl.display",
+		"body": [
+			"use std::fmt; ",
+			"use std::fmt::{Display};",
+			"impl Display for FileState {",
+			"   fn fmt(&self, f:",
+			"      &mut fmt::Formatter,",
+			"    ) -> fmt::Result {",
+			"    match *self {",
+			"       FileState::Open => write!(f, $1),",
+			"       FileState::Closed => write!(f, $2),",
+			"      }",
+			"   }",
+			" }",
+		],
+		"description": "Partial Equal Implement Method"
+	  },
   	"PartialEq No Attribute": {
-		"prefix": "ms.partialeq.withou.attr",
+		"prefix": "ms.impl.partialeq.withou.attr",
 		"body": [
 			"use std::error;",
 			"impl PartialEq for StructName {",
@@ -200,7 +778,7 @@
 		"description": "Partial Equal Implement Method"
 	  },
 	  "PartialEq With Attribute": {
-		"prefix": "ms.partialeq.with.attr",
+		"prefix": "ms.impl.partialeq.with.attr",
 		"body": [
 			"use std::error;",
 			"#[derive(PartialEq)]",
@@ -218,39 +796,19 @@
 		],
 		"description": "Partial Equal Implement Method"
 	  },
-	  "Unwrap Panic": {
-		"prefix": "mb.unwrap.panic",
+	  "Generate Throw Exception": {
+		"prefix": "ml.err.throw",
 		"body": [
-			"fn func(item: Option<&str>) {",				
-			"    let item = item.unwrap();",
-			"    if item == '$1' { panic!('$2''); }",			
-			"}"
+			"Err(io::Error::new(io::ErrorKind::$1, '$2'))",			
+			"$3"
 		],
-		"description": "Option Unwrap Panic None"
-	  },
-   "todo": {
-	  "prefix": "mytodo",
-	  "body": [
-		  "// TODO:$1",
-		  "$2"
-	  ],
-	  "description": "Todo Later sth"
-    },
-
-
-
-
-
-
-
-  "IO/IN": {
-		"prefix": "ml.ioin",
-		"body": [
-			"io::stdin().read_line(&mut $1);",
-			"$2"
+		"description": "Return Error Exception Manual"
+	  },	  
+	  "Error Dynamic Box": {
+		"prefix": "ml.error.box.dyn",
+		"body": [		
+			    "Box<dyn error::Error>",
 		],
-		"description": "stdin"
-    }  
- 
-
+		"description": "Runtime Error by Box dyn"
+	  },		      
 }
