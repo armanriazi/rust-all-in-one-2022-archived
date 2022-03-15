@@ -1,32 +1,28 @@
-use std::ops::Add;
 
-
-#[derive(Debug,Clone,Copy)]
-pub struct Point{
-    x:i32,
-    y:i32,
+fn main() {
+    println!("Hello, world!");
+    //loop_to_10();
+    array_loop();
 }
 
-impl Add for Point{
-    type Output=Point;
-    fn add(self,other:Point)->Self::Output{
-        Point{
-            x:self.x + other.x,
-            y:self.y + other.y,
+fn loop_to_10(){
+    for n in 0..10 {
+        println!("Hello {}",n);
+    }
+}
+
+fn array_loop(){
+
+    let v = vec![4,7,8,9,11,14];
+
+    'outer: for i in 1..10 {
+        for n in &v {
+            if i+n ==11  {
+                break 'outer;
+            }
+            println!("{}",n);
         }
     }
 }
 
-fn main() {
-    let a = Point{x:3,y:5};
-    let b = Point{x:30,y:50};
 
-    let c = a + b ;
-    let d = a.add(b) ;
-
-    println!("c = {:?}",c);
-    println!("c = {:?}",d);
-    println!("a = {:?}",a);
-    
-
-}

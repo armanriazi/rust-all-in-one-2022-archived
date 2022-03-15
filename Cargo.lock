@@ -619,6 +619,7 @@ dependencies = [
  "num",
  "predicates",
  "proptest",
+ "rand",
  "regex",
  "slog-scope",
  "slog-stdlog",

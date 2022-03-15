@@ -1,10 +1,10 @@
-macro_rules! string {
+macro_rules! MyString {
     ($x:expr) => ( // <1>
         String::from(stringify!($x)); // <2>
     )
 }
 
 fn main() {
-    let s = string!(hello there);
+    let s = MyString!(hello there);
     println!("{}", s);
 }
