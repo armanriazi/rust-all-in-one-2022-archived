@@ -91,7 +91,7 @@ impl PositiveNonzeroInteger {
         if value == 0 {
             Err(CreationError::Zero)
         } else if value < 0 {
-            Err(CreationError::Negative)
+            Err(CreationError::Negative(value))
         } else {
             Ok(PositiveNonzeroInteger(value as u64))
         }
@@ -102,7 +102,7 @@ impl PositiveNonzeroInteger {
 fn test_positive_nonzero_integer_creation() {
     assert!(PositiveNonzeroInteger::new(10).is_ok());
     assert_eq!(
-        Err(CreationError::Negative),
+        Err(CreationError::Negative(-10)),
         PositiveNonzeroInteger::new(-10)
     );
     assert_eq!(Err(CreationError::Zero), PositiveNonzeroInteger::new(0));
@@ -110,21 +110,29 @@ fn test_positive_nonzero_integer_creation() {
 
 #[derive(PartialEq, Debug)]
 enum CreationError {
-    Negative,
+    Negative(i64),
     Zero,
 }
 
 impl fmt::Display for CreationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str((self as &dyn error::Error).description())
+        match self {
+            &CreationError::Negative(negative) => write!(f, "Number {} is Negative!", negative),
+            &CreationError::Zero => write!(f, "Number is zero!"),
+        }
+        //f.write_str((self as &dyn error::Error).description())
     }
 }
 
 impl error::Error for CreationError {
-    fn description(&self) -> &str {
-        match *self {
-            CreationError::Negative => "Negative",
-            CreationError::Zero => "Zero",
+    fn description(&self) -> &str {        
+        match self {
+            &CreationError::Negative(_) => "Negative",
+            &CreationError::Zero => "Zero",
         }
+        /*match *self {
+            CreationError::Negative(_) => "Negative",
+            CreationError::Zero => "Zero",
+        }*/
     }
 }

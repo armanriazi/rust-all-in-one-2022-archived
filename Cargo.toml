@@ -43,6 +43,10 @@ num = "0.4.0"
 regex = "1"
 clap = "3.1.5"
 rand = "0.8.5"
+error-chain = "0.12.4"
+reqwest = "0.11.10"
+blocking = "1.2.0"
+serde = "1.0.136"
 
 [dev-dependencies]
 assert_cmd = "2.0.4"
