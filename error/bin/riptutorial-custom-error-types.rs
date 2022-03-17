@@ -42,6 +42,7 @@ impl Error for CustomError {
 }
 
 // Support converting system errors into our custom error.
+//From trait in the standard library, which is used to convert errors from one type into another
 // This trait is used in `try!`.
 impl From<IoError> for CustomError {
     fn from(cause: IoError) -> CustomError {
