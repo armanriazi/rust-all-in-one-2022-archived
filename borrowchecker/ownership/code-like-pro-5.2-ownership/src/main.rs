@@ -8,6 +8,7 @@ fn main() {
         top_grossing_films_reference
     );
     let top_grossing_films_moved = top_grossing_films;
+        //println!("Printed after moving: {:#?}", top_grossing_films);
     println!("Printed after moving: {:#?}", top_grossing_films_moved);
 
     // println!("Print using original value: {:#?}", top_grossing_films);

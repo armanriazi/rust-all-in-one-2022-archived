@@ -40,13 +40,15 @@ log = "0.4.11"
 slog-scope = "4.3.0"
 slog-stdlog = "4.1.0"
 num = "0.4.0"
-regex = "1"
-clap = "3.1.5"
 rand = "0.8.5"
 error-chain = "0.12.4"
 reqwest = "0.11.10"
 blocking = "1.2.0"
 serde = "1.0.136"
+regex = "1.1.0"
+clap = "3.1.6"
+failure = "0.1.5"
+
 
 [dev-dependencies]
 assert_cmd = "2.0.4"
