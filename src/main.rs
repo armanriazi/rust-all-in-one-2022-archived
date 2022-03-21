@@ -1,17 +1,22 @@
-fn main() {
-        let reference_to_nothing = dangle();
-    //let reference_to_nothing = no_dangle();
-    }
-    fn dangle() -> &'static i32 { // dangle returns a reference to a String
-    
-        let s:&'static =10;
-    
-        s // we return a reference to the String, s
-    } // Here, s goes out of scope, and is dropped. Its memory goes away.
-      // Danger!
-    
-      fn no_dangle() -> i32 {
-        let s = 100;
-    
-        s
-    }
+use std::{thread, time};
+  
+ fn main() {
+   let start = time::Instant::now();
+  
+   let handler_1 = thread::spawn(move || {
+     let pause = time::Duration::from_millis(300);
+       thread::sleep(pause.clone());
+   });
+  
+   let handler_2 = thread::spawn(move || {
+     let pause = time::Duration::from_millis(300);
+       thread::sleep(pause.clone());
+   });
+  
+   handler_1.join().unwrap();
+   handler_2.join().unwrap();
+  
+   let finish = time::Instant::now();
+  
+   println!("{:?}", finish.duration_since(start));
+ }
