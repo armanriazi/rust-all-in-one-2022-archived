@@ -99,7 +99,7 @@
 		"prefix": "mb.main",
 		"body": [
 			"use std::io::Error;",
-			"fn main() -> Result<(), Error>{",
+			"fn main() -> Result<(), Box<dyn Error>> {",
 			"   let item=func()?;",
 			"   $1",
 			"   Ok(())",
@@ -191,6 +191,21 @@
 		],
 		"description": "Transmute unsafe memory"
 	} ,	
+
+
+	"'Flow control": {
+		"prefix": "ms.'for",
+		"body": [
+			"'outer: for i in 1..10 {",
+			"    for n in &yourvec {",
+			"        if i+n ==11  {",
+			"            break 'outer;",
+			"        }",			
+			"     }",
+			"}",
+		],
+		"description": "Syntactic sugar ~ Higher-ranked trait bounds"
+	} ,
 	"Find word": {
 		"prefix": "ms.str.find.line",
 		"body": [
@@ -256,6 +271,21 @@
 		],
 		"description": " assert!(b1 == StructName::EnumFieldName); assert!(b1 == b2);"
 	} ,	
+	
+	"Summery Trait on struct fields": {
+		"prefix": "ms.util.trait.sum",
+		"body": [			
+    		"pub trait Summary {",
+			"    fn summarize(&self) -> String;",
+			"}",
+			"impl Summary for $1StructName {",
+			"    fn summarize(&self) -> String {",
+			"        format!($2{}$3,self.$3)",
+			"   }",
+			"}",
+		],
+		"description": " let mut counter = Counter::new();counter.incr();"
+	} ,
 	"Counter": {
 		"prefix": "ms.util.counteri32",
 		"body": [			
@@ -407,6 +437,62 @@
 	],
 	"description": "Macro defination"
 	},
+
+	"Impl differenct generic reverse": {
+		"prefix": "ms.impl.type.mix",
+		"body": [
+		"struct Point<X1, Y1> {",
+		"       x: X1,",
+		"       y: Y1,",
+		"}",		
+		"impl<X1, Y1> Point<X1, Y1> {",
+		"    fn mixup<X2, Y2>(self, other: Point<X2, Y2>) -> Point<X1, Y2> {",
+		"       Point {",
+		"              x: self.x,",
+		"              y: other.y,",
+		"             }",
+		"       }",
+		"}",
+		],
+		"description": "p1.mixup(p2); A method that uses different generic types from its struct’s definition"
+	} ,	
+	"Impl lifetime on where": {
+		"prefix": "ms.impl.wh.lifetime.for",
+		"body": [
+			"fn func_name<F>(slice: &[i32], pred: F) -> Vec<i32>",
+    		"where for<'a> F: Fn(&'a i32) -> bool",
+			"{",
+			"       let mut result = vec![];",
+			"       for &element in slice {",
+			"           if pred(&element) {",
+			"               result.push(element);",
+			"        }",
+			"      }",
+    		"   result",
+			"}",
+		],
+		"description": "This specifies that the reference on i32 in the Fn trait bound can have any lifetime."
+	} ,	
+	"Generic Imp": {
+		"prefix": "ms.impl.wh.gen",
+		"body": [
+			"impl<T> TrainName for StructName<T>",
+			"where T:AddAssign + Copy + PartialOrd",
+			"{",
+			"   type Item=T;",
+			"",
+			"   fn next(&mut self)->Option<T>{",
+			"        if self.x >= self.y {",
+			"          return None;",
+			"        }",
+			"       let res = self.y;",
+			"       self.y += self.w;",
+			"       Some(res)",
+			"    }",
+			"}",
+		],
+		"description": "You can see e.g iterator implement"
+	} ,	
 	"Trait Skeleton": {
 		"prefix": "mb.trait",
 		"body": [
@@ -623,6 +709,15 @@
 		],
 		"description": "Heart as byte-char"
     }  ,
+	"Shorthand file read_to_string": {
+		"prefix": "ml.io.readtostr",
+		"body": [
+		"use std::fs;",
+		"fs::read_to_string($1filename)",
+		"$2"
+		],
+		"description": "Eq: File::open(filename)?.read_to_string(&mut s)?;"
+	  },	  
 	"IO/USE/FILE": {
 		"prefix": "ml.io.use.file",
 		"body": [
@@ -724,7 +819,18 @@
 
 
 
-	  
+	    
+  
+	"Filter on collection": {
+		"prefix": "ml.collect.filter",
+		"body": [			
+			"let multiples_of_10 = items.iter().filter(|&y| y % 10 == 0).map(|&y| y.clone()).collect::<Vec<_>>();",			
+			"let multiples_of_10: Vec<_> = items.iter().filter(|&y| y % 10 == 0).map(|&y| y.clone()).collect();",
+			"let multiples_of_10: Vec<_> = items.into_iter().filter(|y| y % 10 == 0).collect();",
+		  
+		],
+		"description": ".iter() Returns an iterator over the slice. into_iter() Creates an iterator from a value."
+	  },
 	  "HashMap": {
 		"prefix": "ms.hashmap",
 		"body": [
@@ -746,6 +852,7 @@
 		],
 		"description": "inner is new important-Match Option"
 	  },
+	  
 	  "Implement for dsiplay": {
 		"prefix": "ms.impl.display",
 		"body": [
@@ -796,6 +903,23 @@
 		],
 		"description": "Partial Equal Implement Method"
 	  },
+	  "Error handle for question mark ?": {
+		"prefix": "ml.err.?",
+		"body": [
+			"#[derive(Debug)]",
+			"struct Error {",
+			"message: String,",
+			"}",
+			"impl From<std::io::Error> for Error {",
+			"   fn from(other: std::io::Error) -> Self {",
+			"    Self {",
+			"          message: other.to_string(),",
+			"         }",
+			"   }",
+			"}"
+		],
+		"description": "Convert implicity error for ? to explicity error"
+	  },	 
 	  "Generate Throw Exception": {
 		"prefix": "ml.err.throw",
 		"body": [
@@ -803,12 +927,12 @@
 			"$3"
 		],
 		"description": "Return Error Exception Manual"
-	  },	  
+	  },	
 	  "Error Dynamic Box": {
-		"prefix": "ml.error.box.dyn",
+		"prefix": "ml.error.dyn.box",
 		"body": [		
 			    "Box<dyn error::Error>",
 		],
-		"description": "Runtime Error by Box dyn"
+		"description": "The Box<dyn Error> type is called a trait object, Runtime Error by Box dyn"
 	  },		      
 }
