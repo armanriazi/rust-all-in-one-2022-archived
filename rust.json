@@ -247,6 +247,24 @@
 		],
 		"description": "where T is a pair of values of type (usize, String)"
 	} ,	
+	"Add method to standard library types": {
+		"prefix": "ms.util.string.append",
+		"body": [			
+			"trait Append {",
+			"     fn append_bar(self) -> Self;",
+			"}",			
+			"impl Append for String {",
+			"    fn append(mut self,&str) -> Self {",
+			"       self.push_str(&str);",
+			"       self",
+			"   }",
+			"}",
+			"String::from('').append('ArmanRiazi')"
+		],
+		"description": "Add trait custom to another types that implemented traits. Other e.g.impl Append for Vec<String>"
+	} ,	
+	
+
 	"Partial Eq On Struct": {
 		"prefix": "ms.util.eqstruct",
 		"body": [
@@ -935,4 +953,68 @@
 		],
 		"description": "The Box<dyn Error> type is called a trait object, Runtime Error by Box dyn"
 	  },		      
+
+
+
+
+
+
+	  "Id thread": {
+		"prefix": "ms.thread.id",
+		"body": [		
+			"#![feature(thread_id)]",
+			"use std::thread;",
+			"let thread_id = thread::current().id() as u64;"
+		],
+		"description": "Get id thread"
+	  },
+	  "Spawn thread with move": {
+		"prefix": "mb.thread.spw",
+		"body": [		
+			"use std::{thread, time};",
+			"thread::spawn(move || {",
+			"});"
+		],
+		"description": "create threads (often referred to as spawning treads)-Why is move required? Closures spawned in subthreads can potentially outlive their calling scope."
+	  },
+	  "Spawn thread with sleep strategy": {
+		"prefix": "mb.thread.sterategy.slp",
+		"body": [		
+			"let pause = time::Duration::from_millis($1);",
+			"thread::sleep(pause);"
+		],
+		"description": "A sleep is a request to the OS that the thread should be suspended until the time has passed"
+	  },
+	  "Spawn thread with busywait strategy": {
+		"prefix": "mb.thread.sterategy.bw",
+		"body": [		
+			"let start = time::Instant::now();",
+			"let pause = time::Duration::from_millis($1);",
+			"while start.elapsed() < pause {",
+			"  thread::yield_now();",
+			"}",
+		],
+		"description": "also known as busy loop and spin loop-If you want to sleep pause a thread for short amounts of time, or if your application is sensitive to timing, use a spin loop"
+	  },
+
+	"Passing data between threads": {
+		"prefix": "mb.thread.channel",
+		"body": [		
+			"use std::sync::mpsc;",	
+			"let (tx, rx) = mpsc::channel();",
+			"thread::spawn(move || {",    
+			"    tx.send(val).unwrap();",
+			"});",
+			"let received = rx.recv().unwrap();",
+		],
+		"description": "Channel thread"
+	  },
+
+	  "Spawn thread with atomic strategy": {
+		"prefix": "mb.thread.sterategy.atom",
+		"body": [		
+			""
+		],
+		"description": "An alternative to yielding is to use the function std::sync::atomic::spin_loop _hint(). spin_loop_hint() avoids the OS; instead, it directly signals the CPU. A CPU might use that hint to turn off functionality, thus saving power usage."
+	  },
 }
