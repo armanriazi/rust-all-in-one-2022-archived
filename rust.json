@@ -956,9 +956,44 @@
 
 
 
-
-
-
+	  
+	  "Dereference & Drop Your Own Smart Pointer": {
+		"prefix": "ms.impl.ref",
+		"body": [		
+			"use std::ops::Deref;",
+			"impl<T> Deref for MyBox<T> {",
+			"   type Target = T;",			
+			"   fn deref(&self) -> &Self::Target {",
+			"      &self.0",
+			"   }",
+			"}",	
+			"impl DerefMut for MyBox { ",
+			"   fn deref_mut(&mut self) -> &mut Self::Target { ",
+			"      &mut self.0",
+			"   }",
+			"}",
+			"impl Drop for MyBox {",
+			"     fn drop(&mut self) {",
+			"        println!($1'Dropping CustomSmartPointer with data `{}`!$2, self.data);",
+			"    }",
+			"}"
+			
+		],
+		"description": "Treating a Type Like a Reference by Implementing the Deref Trait-behind the scenes Rust actually ran this code:*(y.deref()) - drop(instanceObject)"
+	  },
+	  "Recursive types": {
+		"prefix": "ms.box.cons",
+		"body": [		
+			"use crate::List::{Cons, Nil};",
+			"enum List {",
+			"   Cons(i32, Box<List>),",
+			"   Nil,",
+			"}",
+			"let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));",
+			
+		],
+		"description": "Cons is just a name and it is replacable with anyname"
+	  },
 	  "Id thread": {
 		"prefix": "ms.thread.id",
 		"body": [		
@@ -969,7 +1004,7 @@
 		"description": "Get id thread"
 	  },
 	  "Spawn thread with move": {
-		"prefix": "mb.thread.spw",
+		"prefix": "ms.thread.spw",
 		"body": [		
 			"use std::{thread, time};",
 			"thread::spawn(move || {",
@@ -978,7 +1013,7 @@
 		"description": "create threads (often referred to as spawning treads)-Why is move required? Closures spawned in subthreads can potentially outlive their calling scope."
 	  },
 	  "Spawn thread with sleep strategy": {
-		"prefix": "mb.thread.sterategy.slp",
+		"prefix": "ms.thread.sterategy.slp",
 		"body": [		
 			"let pause = time::Duration::from_millis($1);",
 			"thread::sleep(pause);"
@@ -986,7 +1021,7 @@
 		"description": "A sleep is a request to the OS that the thread should be suspended until the time has passed"
 	  },
 	  "Spawn thread with busywait strategy": {
-		"prefix": "mb.thread.sterategy.bw",
+		"prefix": "ms.thread.sterategy.bw",
 		"body": [		
 			"let start = time::Instant::now();",
 			"let pause = time::Duration::from_millis($1);",
@@ -998,7 +1033,7 @@
 	  },
 
 	"Passing data between threads": {
-		"prefix": "mb.thread.channel",
+		"prefix": "ms.thread.channel",
 		"body": [		
 			"use std::sync::mpsc;",	
 			"let (tx, rx) = mpsc::channel();",
@@ -1011,7 +1046,7 @@
 	  },
 
 	  "Spawn thread with atomic strategy": {
-		"prefix": "mb.thread.sterategy.atom",
+		"prefix": "ms.thread.sterategy.atom",
 		"body": [		
 			""
 		],
