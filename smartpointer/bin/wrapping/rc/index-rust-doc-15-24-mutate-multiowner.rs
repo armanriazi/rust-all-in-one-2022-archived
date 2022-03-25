@@ -26,9 +26,8 @@ fn main() {
     println!("c after = {:?}", c);
     {
         *value.borrow_mut() += 10;
-         println!("(inner scope)d after = {:?}", d);//35
+         println!("(inner scope)d after = {:?}", d);
     }
-    *value.borrow_mut() += 10;
     println!("a after = {:?}", a);
     println!("b after = {:?}", b);
     println!("c after = {:?}", c);
