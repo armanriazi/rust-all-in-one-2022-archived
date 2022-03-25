@@ -369,7 +369,6 @@
 
 
 
-
 	  "Copy/Clone/Imp strategy": {
 		"prefix": "ms.rc.mut",
 		"body": [
@@ -981,6 +980,84 @@
 		],
 		"description": "Treating a Type Like a Reference by Implementing the Deref Trait-behind the scenes Rust actually ran this code:*(y.deref()) - drop(instanceObject)"
 	  },
+
+	"Shared list wih C": {
+		"prefix": "mb.list.rc",
+		"body": [
+			"enum List {",
+			"   Cons(i32, Rc<List>),",
+			"   Nil,",
+			"}",
+			"",
+			"use crate::List::{Cons, Nil};",
+			"use std::rc::Rc;",			
+			"fn main() {",
+			"   let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));",
+			"   let b = Cons(3, Rc::clone(&a));",
+			"   let c = Cons(4, Rc::clone(&a));",
+			"   println!('count after creating a = {}', Rc::strong_count(&a));",
+			"}"
+		],
+		"description": "The implementation of Rc::clone doesn’t make a deep copy of all the data like most types’ implementations of clone "
+	} ,	
+
+
+
+
+
+"Tree References": {
+		"prefix": "ms.tree",
+		"body": [					
+		"use std::cell::RefCell;",
+	    "use std::rc::{Rc, Weak};",
+	    "#[derive(Debug)]",
+	    "struct Node {",
+		"   value: i32,",
+		"   parent: RefCell<Weak<Node>>,",
+		"   children: RefCell<Vec<Rc<Node>>>,",
+		"}",
+		"let leaf = Rc::new(Node {",
+		"   value: 3,",
+		"   parent: RefCell::new(Weak::new()),",
+		"   children: RefCell::new(vec![]),",
+		"});",
+		"{",
+		"let branch = Rc::new(Node {",
+		"   value: 5,",
+		"   parent: RefCell::new(Weak::new()),",
+		"   children: RefCell::new(vec![Rc::clone(&leaf)]),",
+		"});",
+		"*leaf.parent.borrow_mut() = Rc::downgrade(&branch);",
+		],
+		"description": "Creating branch in an inner scope and examining strong and weak reference counts"
+	},
+	"Reference Cycle": {
+		"prefix": "ms.list.tail",
+		"body": [		
+			"use crate::List::{Cons, Nil};",
+			"use std::cell::RefCell;",
+			"use std::rc::Rc;",
+			"",
+			"#[derive(Debug)]",
+			"enum List {",
+			"   Cons(i32, RefCell<Rc<List>>),",
+			"   Nil,",
+			"}",
+			"",
+			"impl List {",
+			"    fn tail(&self) -> Option<&RefCell<Rc<List>>> {",
+			"       match self {",
+			"           Cons(_, item) => Some(item),",
+			"           Nil => None,",
+			"       }",
+			"    }",
+			"}",
+			"let a = Rc::new(Cons(5, RefCell::new(Rc::new(Nil))));",
+			"let b = Rc::new(Cons(10, RefCell::new(Rc::clone(&a))));"
+			
+		],
+		"description": "Creating a reference cycle of two List values pointing to each other"
+	},
 	  "Recursive types": {
 		"prefix": "ms.box.cons",
 		"body": [		
@@ -993,7 +1070,18 @@
 			
 		],
 		"description": "Cons is just a name and it is replacable with anyname"
-	  },
+	  },	  
+	  "Sync/Mutex/SharingState/MultiThread/Arc": {
+		"prefix": "ms.thread.mutexarc",
+		"body": [		
+			"use std::sync::{Arc, Mutex};",
+			"use std::thread;",
+			"let counter = Arc::new(Mutex::new(0));",
+			"let counter = Arc::clone(&counter);",
+			"let mut num = counter.lock().unwrap();"
+		],
+		"description": "mutex arc-sharing counter for multithread"
+	  },		
 	  "Id thread": {
 		"prefix": "ms.thread.id",
 		"body": [		
