@@ -1,10 +1,13 @@
-struct Point<T> {
+struct Point<T> 
+where T:PartialOrd {
     x: T,
     y: T,
 }
 
 impl<T> Point<T> {
     fn x(&self) -> &T {
+        if (&self.x == 5)
+        0
         &self.x
     }
 }

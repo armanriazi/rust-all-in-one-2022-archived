@@ -7,7 +7,7 @@ struct User{
     shoesize:i32,
 }
 
-impl User{
+impl user{
     fn simple_string(&self)->String{
         format!("{} - {} - {}cm - shoe:{}",self.name,self.age,self.height,self.shoesize) 
     }

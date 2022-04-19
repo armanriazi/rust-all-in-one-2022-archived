@@ -7,6 +7,12 @@
 
 pub fn capitalize_first(input: &str) -> String {
     let mut c = input.chars();
+    // h
+    match c.next() {
+        None => String::new(),
+        Some(first) => first.to_string().to_uppercase() + c.as_str(),
+    }
+    //e
     match c.next() {
         None => String::new(),
         Some(first) => first.to_string().to_uppercase() + c.as_str(),
@@ -21,7 +27,7 @@ mod tests {
     // Tests that verify your `capitalize_first` function implementation
     #[test]
     fn test_success() {
-        assert_eq!(capitalize_first("hello"), "Hello");
+        assert_eq!(capitalize_first("hello"), "HEllo");
     }
 
     #[test]
