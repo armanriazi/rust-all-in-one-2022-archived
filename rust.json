@@ -334,7 +334,7 @@
   			"   i.add(j)",
 			"}",
 			"fn <T: Sub<Output = T>>(i: T, j: T) -> T {",
-  			"   i-j",
+  			"   i.saturating_sub(j)",
 			"}",
 		],
 		"description": " let mut counter = Counter::new();counter.incr();"
