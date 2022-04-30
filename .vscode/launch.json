@@ -7,7 +7,8 @@
         {
             "type": "lldb",
             "request": "custom",
-            "name": "Custom launch",
+            "name": "Debug BIN",
+            "args": ["x64"],
             "targetCreateCommands": [
                 "target create ${workspaceFolder}/src/main.rs"
             ],
@@ -19,7 +20,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Cargo launch",
+            "name": "Build LIBs",
             "cargo": {
                 "args": [
                     "build",
@@ -32,7 +33,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Cargo test",
+            "name": "Test",
             "cargo": {
                 "args": [
                     "test",
