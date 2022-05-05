@@ -24,6 +24,9 @@ impl PartialEq<Book> for BookFormat {
         *self == other.format
     }
 }
+fn equal<T: std::ops::PartialEq<Output = bool>>(i: T, j: T) -> bool{
+    i.eq(&j)
+}
 
 
 fn main(){}

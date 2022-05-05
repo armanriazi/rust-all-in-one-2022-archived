@@ -128,14 +128,26 @@
 		],
 		"description": "_exclusive range  pattern, BK REF here matches 1 and 2; partially unstable. 🚧"
 	},
-	"Getting value option of some": {
-		"prefix": "ml.option.val",
+	"Consume if let - getting value option of some": {
+		"prefix": "ml.consume.if.option.val",
 		"body": [
 			"if let Some(value) = optional_value {",
 			"   println!($1{}$2, value);",
 			"}"
 		],
 		"description": "Or you can try 'let' in while"
+	},	
+	"Consume match let - getting value option of some": {
+		"prefix": "ml.consume.match.option.val",
+		"body": [
+			"let maybe_name = Some(String::from(your_str));",
+			"// Using `ref`, the value is borrowed, not moved ...",
+			"match maybe_name {",
+			"     Some(ref n) => println!($1{n}$2),",
+			"     => println!('Hello, world'),",
+			"}"
+		],
+		"description": "Or you can try without ref for making movable and assignable n variable"
 	},	
 	"Destructure struct": {
 		"prefix": "ml.destruct",
@@ -336,6 +348,9 @@
 			"fn <T: Sub<Output = T>>(i: T, j: T) -> T {",
   			"   i.saturating_sub(j)",
 			"}",
+			"fn equal<T: std::ops::PartialEq<Output = bool>>(i: T, j: T) -> bool{",
+  			"   i.eq(&j)",
+			"}"
 		],
 		"description": " let mut counter = Counter::new();counter.incr();"
 	} ,

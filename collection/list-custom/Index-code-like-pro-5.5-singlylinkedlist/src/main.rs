@@ -23,13 +23,14 @@ impl<T> ListItem<T> {
     }
     fn mut_tail(&mut self) -> &mut Self {
         if self.next.is_some() {
-            self.next.as_mut().unwrap().mut_tail()
+            self.next.as_mut().unwrap()//.mut_tail()
         } else {
             self
         }
     }
     fn data(&self) -> &T {
         self.data.as_ref()
+        //&self.data;
     }
 }
 

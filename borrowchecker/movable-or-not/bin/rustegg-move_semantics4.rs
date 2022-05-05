@@ -21,6 +21,7 @@ fn fill_vec() -> Vec<i32> {
     vec.push(22);
     vec.push(44);
     vec.push(66);
-
+    vec.extend([1, 2, 3].iter().copied());
+    vec.extend([11, 22, 33].iter());
     vec
 }
