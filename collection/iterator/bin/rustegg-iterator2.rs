@@ -39,7 +39,7 @@ mod tests {
     #[test]
     fn test_iterate_string_vec() {
         let words = vec!["hello", "world"];
-        let capitalized_words: Vec<String> = words.iter().map(|w| capitalize_first(w)).collect();
+        let capitalized_words: Vec<String> = words.iter().map(|w| capitalize_first(w)).collect();// or: .collect::<Vec<String>>();
         assert_eq!(capitalized_words, ["Hello", "World"]);
     }
 

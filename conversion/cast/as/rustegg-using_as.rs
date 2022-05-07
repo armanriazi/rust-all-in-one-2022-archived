@@ -8,6 +8,8 @@ fn average(values: &[f64]) -> f64 {
     let total = values
         .iter()
         .fold(0.0, |a, b| a + b);
+        // (1..=num).into_iter().fold(0,|x,y| x+y)
+        // (1..=num).product() //for multiply or factorial
     total / values.len()
 }
 

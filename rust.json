@@ -123,7 +123,7 @@
 	"Pattern range": {
 		"prefix": "ml.p.range..",
 		"body": [
-			"1..3 => {pr$1}",
+			"1..=3 => {pr$1}",
 			"$2"
 		],
 		"description": "_exclusive range  pattern, BK REF here matches 1 and 2; partially unstable. 🚧"
@@ -354,8 +354,28 @@
 		],
 		"description": " let mut counter = Counter::new();counter.incr();"
 	} ,
-
-
+	"Sum accumilator Fold": {
+		"prefix": "ms.util.fold",
+		"body": [			
+    		"(1..=num).into_iter().fold(0,|x,y| x+y)",        	
+		],
+		"description": " sum item with next item"
+	} ,	   
+	"Multiply accumilator Fold": {
+		"prefix": "ms.util.product",
+		"body": [			    	
+        	"(1..=num).product()"
+		],
+		"description": " for multiply or factorial"
+	} ,	 
+	"Get Memory Address &Size Memory ofa struct": {
+		"prefix": "ms.util.getaddress.struct",
+		"body": [
+			"let uc_address = uc_slice as *const UsageCounter as usize;",
+			"let size_of_uc = std::mem::size_of::<UsageCounter>();",	
+		],
+		"description": "Return addr of a struct_slice"
+	} ,  
 	"Clap run buy param": {
 		"prefix": "ms.app.clap",
 		"body": [						
@@ -612,6 +632,14 @@
 		],
 		"description": "Return addr of a struct_slice"
 	} ,
+	"Cast non-primitive types with as": {
+		"prefix": "ml.cast.nonprimitive",
+		"body": [
+			"let uc_address = uc_slice as *const UsageCounter;",
+			"let size_of_uc = std::mem::size_of::<UsageCounter>();",	
+		],
+		"description": "Return addr of a struct_slice"
+	} ,
 	"Memory  OverWrite to a address mem": {
 		"prefix": "ms.mem.addr.get",
 		"body": [
@@ -706,15 +734,22 @@
 	 ],
 	 "description": "assert equal"
     },
-    "Assert!": {
-		"prefix": "ml.ass",
+    "Assert!Bool": {
+		"prefix": "ml.asseq.format",
+		"body": [
+			"assert_eq!(format!($1{:?}$2, x), $3Ok([])$4)",
+			"$5"
+		],
+		"description": "asserteq format"
+    },
+	"Assert!Format": {
+		"prefix": "ml.ass.bool",
 		"body": [
 			"assert!($1)",
 			"$2"
 		],
 		"description": "assert(bool)"
     },
-	
 
 
 
@@ -816,16 +851,59 @@
 		],
 		"description": "$1-$3 is similar name.Make this an if let statement whose value is 'Some' type"
 	  }	  ,
-	  "While let Some": {
-		"prefix": "ms.while.let.some",
+	  "Get Some <Vec<Vec<>>": {
+		"prefix": "ms.vec.while.let",
 		"body": [
 			"while let Some(Some(value)) = $1vec.pop() {",	  
 			"      ml.pr$2",
 			"}"
 		],
+		"description": "Access to  internal vec some"
+	  },	  
+	  "While let Some": {
+		"prefix": "ms.while.let.some",
+		"body": [
+			"let mut it = l.into_iter();",
+			"while let Some(n) = it.next(){",
+			"   s +=n",
+			"} "
+		],
 		"description": "make this a while let statement - remember that vector.pop also adds another layer of Option<T>.\nYou can stack `Option<T>`'s into while let and if let"
-	  },	      
-
+	  },
+	"macro config debug": {
+		"prefix": "ms.cfg.debug",
+		"body": [
+			"if cfg!(debug_assertions) { ",
+			"   eprintln!($1debug: {:?} -> {:?}", 
+			"}"
+		],
+		"description": "When debugging is enabled, include this code block. The exclamation mark (!) indicates a macro invocation. eprintln! prints to standard error. The {:?} syntax requests Rust print out the default debugging representation for the two types."
+	  },
+	  "attribute config debug": {
+		"prefix": "mb.cfg.debug",
+		"body": [
+		"#[cfg(target_family = 'unix')]",
+		"fn get_platform() -> String {",
+		"    'UNIX'.into()",
+		"}",
+		"#[cfg(target_family = 'windows')]",
+		"fn get_platform() -> String {",
+		"  'Windows'.into()",
+		"}",
+		"fn main() {",
+		"   println!('This code is running on a {} family OS', get_platform());",
+		"   if cfg!(target_feature = 'avx2') {",
+		"      println!('avx2 is enabled');",
+		"   } else {",
+		"       println!('avx2 is not enabled');",
+		"   }",
+		"   if cfg!(not(any(target_arch = 'x86', target_arch = 'x86_64'))) {",
+		"       println!('This code is running on a non-Intel CPU');",
+		"    }",
+		"}"
+		],
+		"description": "cfg!, unlike #[cfg], does not remove any code and only evaluates to true or false. For example, all blocks in an if/else expression need to be valid when cfg! is used for the condition, regardless of what cfg! is evaluating."
+	  },
 	"ParseIntError": {
 		"prefix": "ms.parseerror",
 		"body": [
@@ -858,7 +936,7 @@
 		"body": [			
 			"let multiples_of_10 = items.iter().filter(|&y| y % 10 == 0).map(|&y| y.clone()).collect::<Vec<_>>();",			
 			"let multiples_of_10: Vec<_> = items.iter().filter(|&y| y % 10 == 0).map(|&y| y.clone()).collect();",
-			"let multiples_of_10: Vec<_> = items.into_iter().filter(|y| y % 10 == 0).collect();",
+			"let multiples_of_10: Vec<_> = items.into_iter().filter(|y| y % 10 == 0).collect();"
 		  
 		],
 		"description": ".iter() Returns an iterator over the slice. into_iter() Creates an iterator from a value."
@@ -1169,5 +1247,5 @@
 			""
 		],
 		"description": "An alternative to yielding is to use the function std::sync::atomic::spin_loop _hint(). spin_loop_hint() avoids the OS; instead, it directly signals the CPU. A CPU might use that hint to turn off functionality, thus saving power usage."
-	  },
+	  }
 }
