@@ -22,9 +22,20 @@ fn main() {
                 i += 5;
             }
             println!("Sum of offset {} is {}", offset, sum);
+            //if we need to access sum on main thread or external current thread so we need to Arc::New(Mutext::new(0)) that show in the other examples for using Arc with Mutex
         }));
     }
     for handle in joinhandles.into_iter() {
         handle.join().unwrap();
     }
 }
+/*
+Sum of offset 0 is 950
+Sum of offset 6 is 969
+Sum of offset 7 is 988
+Sum of offset 5 is 950
+Sum of offset 1 is 970
+Sum of offset 2 is 990
+Sum of offset 4 is 1030
+Sum of offset 3 is 1010
+*/

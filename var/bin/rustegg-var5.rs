@@ -8,4 +8,5 @@ fn main() {
         let number = 3;
         println!("Number {}", number);
     }
+    println!("Number {}", number);
 }

@@ -9,4 +9,5 @@ fn main() {
     }
 
     println!("m = {:?}", m);
+    println!("m = {:?}", m.lock().unwrap());
 }

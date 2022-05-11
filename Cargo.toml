@@ -34,6 +34,7 @@ members = [
 
 
 # core = { path = "core" }
+rayon = "1.0.0"
 human-panic = "1.0.3"
 better-panic = "0.3.0"
 log = "0.4.11"

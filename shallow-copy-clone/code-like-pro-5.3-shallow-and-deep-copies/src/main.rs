@@ -1,10 +1,20 @@
+
+fn make_nothing() -> () {
+    return ();
+}
+
+// the return type is implied as ()
+fn make_nothing2() {
+    // this function will return () if nothing is specified to return
+}
+
 fn main() {
-    let mut most_populous_us_cities = vec!["New York City", "Los Angeles", "Chicago", "Houston"];
-    let most_populous_us_cities_cloned = most_populous_us_cities.clone();
-    most_populous_us_cities.push("Phoenix");
-    println!("most_populous_us_cities = {:#?}", most_populous_us_cities);
-    println!(
-        "most_populous_us_cities_cloned = {:#?}",
-        most_populous_us_cities_cloned
-    );
+    let a = make_nothing();
+    let b = make_nothing2();
+    let c = 8.99f64;
+    // Printing a debug string for a and b
+    // Because it's hard to print nothingness
+    println!("The value of a: {:?}", a);
+    println!("The value of b: {:?}", b);
+    println!("The value of c: {:?}", c);
 }

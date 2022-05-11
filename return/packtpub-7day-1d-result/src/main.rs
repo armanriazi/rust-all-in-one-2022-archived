@@ -1,6 +1,11 @@
 use std::collections::HashMap;
 use std::env::args;
 
+
+
+// cargo run  arg1 arg2=sth arg3
+
+
 //args:usize
 fn main() {
 
