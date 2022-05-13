@@ -446,6 +446,30 @@
 		],
 		"description": "wrapper type = reference-counted value = shared ownership =track valid references.Rc<T> does not allow mutation. To permit that, we need to wrap our wrapper. Rc<RefCell<T>>"
 	} ,	
+
+	
+		
+	"AsRef Generic": {
+		"prefix": ["ms.gen.asref.where","ms.asref.gen"],
+			"body": [
+				"fn char_counter<T: AsRef<str>>(arg: T) -> usize {",
+				"   arg.as_ref().chars().count()",
+				"}"
+			],
+			"description": "AsRef Generic to 2 style"
+	} ,	
+	"AsRef Generic With Where": {
+		"prefix": ["ms.gen.asref.where","ms.asref.where"],
+		"body": [
+			"fn byte_counter<T>(arg: T) -> usize ",
+			"where ",
+				"T: AsRef<str>,",
+				"{",
+				"arg.as_ref().as_bytes().len()",
+			"}",
+		],
+		"description": "AsRef Generic to Where style"
+} ,		
 	"Generic Operators Traits": {
 		"prefix": "ms.gen.opr",
 		"body": [
@@ -1267,18 +1291,18 @@
 		  ],
 		  "description": "Send is require because we have jump from quick func(thread a) to part func(thread b) frequently"
 		},
-		"Passing data between threads": {
+		"Passing data between threads": {			
 			"prefix": "ms.thread.channel",
 			"body": [		
 				"use std::sync::mpsc;",	
-				"let (tx, rx) = mpsc::channel();",
+				"let (tx, rx) = mpsc::channel();",		
 				"thread::spawn(move || {",    
 				"    tx.send(val).unwrap();",
 				"});",
 				"let received = rx.recv().unwrap();",
 			],
 			"description": "Channel thread"
-		  },	  	
+		  },	  		
 		"Spawn thread with atomic strategy": {
 			"prefix": "ms.thread.sterategy.spin_loop",
 			"body": [		
