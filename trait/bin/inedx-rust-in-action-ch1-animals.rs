@@ -9,7 +9,11 @@ struct LoudDog(Animal);
 trait Talk {
 	fn talk(&self) -> ();
 }
-
+impl Talk for Animal {
+	default fn talk(&self) { // note the use of the default 
+		println!("<silence>");
+	}
+}
 impl Talk for Cat {
 	fn talk(&self) {
 		println!("Meow");
