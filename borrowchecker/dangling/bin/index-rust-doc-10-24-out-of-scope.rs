@@ -8,6 +8,7 @@ fn main() {
     }
     println!("The longest string is {}", result);
 }
+// No er :fn longest(x: &str, y: &str) -> String {
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
         x
