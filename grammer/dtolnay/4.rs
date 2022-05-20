@@ -10,7 +10,9 @@ In expression position, .. is the syntax for constructing various types of range
 
 On the other hand in a pattern, .. is used to mean "any number of elements". So the pattern (.., x, y) matches a tuple with 2 or more elements, binding the second-last one to x and the last one to y.
 
-Coming out of the first line of main, we have x = 1 and y = (..). Thus the value printed is going to be b"066"[..][1].
+Coming out of the first line of main, we have x = 1 and y = (..). 
+
+Important: Thus the value printed is going to be b"066"[..][1].
 
 The expression b"066" is a byte-string literal of type &'static [u8; 3] containing the three ASCII bytes b'0', b'6', b'6'.
 
