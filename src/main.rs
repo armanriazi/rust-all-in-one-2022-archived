@@ -1,20 +1,55 @@
+macro_rules! m {
+    (==>) => { print!("1"); };
+    (= = >) => { print!("2"); };
+    (== >) => { print!("3"); };
+    (= =>) => { print!("4"); };
+    (<<=) => { print!("5"); };
+    (=>>) => { print!("6"); };
+    (=<<) => { print!("7"); };
+    (= <<) => { print!("8"); };
+    (= <) => { print!("9"); };
+    (= >) => { print!("10"); };
+}
+
 fn main() {
-    let (.., x, y) = (0, 1, ..);
-    print!("{}", b"066"[y][x]);
+    m!(==>);
+    m!(= = >);
+    m!(== >);
+    m!(= =>);
+    m!(<<=);
+    m!(=>>);
+    m!(=<<);
+    m!(= <<);
+    m!(= <);
+    m!(= >);
 }
 /*
-54
-This question demonstrates two different meanings of ...
+1214
+Adjacent punctuation characters in the input pattern of a macro_rules! macro are grouped according to how those characters are used by native Rust tokens.
 
-In expression position, .. is the syntax for constructing various types of ranges. Here the expression (0, 1, ..) is a tuple with three elements, the third one having type RangeFull.
+This page contains a list of the single-character and multi-character punctuation tokens involved in the Rust grammar.
 
-On the other hand in a pattern, .. is used to mean "any number of elements". So the pattern (.., x, y) matches a tuple with 2 or more elements, binding the second-last one to x and the last one to y.
+As one example from that list, <<= is a single token because the Rust grammar uses that sequence of characters to mean left shift assignment. Thus a macro_rules! input rule containing <<= would only match if all three characters <<= are written consecutively without spaces in the invocation.
 
-Coming out of the first line of main, we have x = 1 and y = (..). 
+But for example =<< is not a native token in the Rust grammar. 
+The parser of macro_rules! will decompose this into Rust tokens according to a greedy process. =< is also not a native token, so first we would need to match a = by itself. 
+Then << is a native token. Writing =<< in a macro rule behaves exactly the same as writing = <<.
 
-Important: Thus the value printed is going to be b"066"[..][1].
+Now let's decompose the rules in the quiz code the same way.
 
-The expression b"066" is a byte-string literal of type &'static [u8; 3] containing the three ASCII bytes b'0', b'6', b'6'.
+==> decomposes as == >.
+= = > is already decomposed into Rust tokens.
+== > is already decomposed.
+= => is already decomposed.
+Our macro is the same as if we had written the first rule with a space. The third rule is unreachable.
 
-When we slice the byte-string with RangeFull we get a dynamically sized slice [u8] of length 3. Next we access element 1 of the slice, which is the byte b'6' of type u8. When printed, we see the decimal representation of the byte value of the ASCII digit 6, which is the number 54.
+macro_rules! m {
+    (== >) => { print!("1"); };
+    (= = >) => { print!("2"); };
+    (== >) => { print!("3"); };
+    (= =>) => { print!("4"); };
+}
+Within main, the first and third lines both match the first macro rule. The second line matches the second rule and the fourth line matches the fourth rule. The output is 1214.
+
+Procedural macros use a more flexible and powerful macro API and can always distinguish between different spacings of the same characters, such as == > vs ==>.
 */

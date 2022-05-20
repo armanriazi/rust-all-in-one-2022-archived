@@ -1,14 +1,18 @@
 #[repr(u8)]
 enum Enum {
-    First,
-    Second,
+    First, //0u8
+    Second,//1u8
 }
 
 impl Enum {
     fn p(self) {
-        match self {
+        match self {            
+            Enum::First => print!("1"),
+            Enum::Second => print!("2"),
+            /*
             First => print!("1"),
             Second => print!("2"),
+            */
         }
     }
 }
