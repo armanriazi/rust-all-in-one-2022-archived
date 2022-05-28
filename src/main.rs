@@ -1,9 +1,13 @@
+///#Experimental non-stable channel build
+///![feature(lint_reasons)]
+///![allow(clippy::some_lint, reason = "False positive rust-lang/rust-clippy#1002020")]
+/// #
+
 fn main() {
-    
-    use std::collections::HashMap;
+    let y = {
+        let x = 3;
+        x + 1
+    };
 
-    let mut map = HashMap::<String, String>::default();
-    map.insert("hello?".into(), "Hello!".into());
-
-    println!("{:?}", map.get("hello?"));
+    println!("The value of y is: {}", y);
 }

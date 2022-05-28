@@ -1,5 +1,5 @@
 [package]
-name = "rust-starter"
+name = "rust-all-in-one"
 version = "1.0.0"
 autobins = true
 authors = ["ArmanRiazi <arman2riazi@gmail.com>"]
@@ -7,11 +7,9 @@ edition = "2021"
 repository = "https://github.com/armanriazi/rust-all-in-one"
 readme = "README.md"
 license = "MIT"
-#keywords = ["cli", "starter"]
 description = """
 Rust All In One aims to provide high quality components to bootstrap your Rust CLI Project. It includes a battery of most used libraries; and defines a set of Rust best practices.
 """
-
 keywords = ["msrv", "rust-version", "toolchain", "find", "minimum"]
 categories = ["development-tools", "development-tools::cargo-plugins", "command-line-utilities"]
 
@@ -19,6 +17,9 @@ categories = ["development-tools", "development-tools::cargo-plugins", "command-
 #[features]
 #default = ["rust-releases-dist-source"]
 #rust-releases-dist-source = ["rust-releases/rust-releases-rust-dist"]
+
+[package.metadata]
+msrv="1.31.0"
 
 [package.metadata.release]
 tag-name = "v{{version}}"
@@ -94,8 +95,8 @@ metrohash = "1.0.6"
 #rocket_codegen = "0.3.17"
 #cookie="0.9.1"
 #rocket = "0.3.17"
-chrono = "0.4.11"
-rocket = "0.4.4"
+#chrono = "0.4.11"
+#rocket = "0.4.4"
 serde_derive = "1.0"
 #[dependencies.rocket_contrib]
 #version = "0.4.4"
@@ -105,6 +106,10 @@ serde_derive = "1.0"
 #futures = "0.1.25"
 #tokio = "0.1.16"
 #tokio-channel = "0.1.0"
+
+
+[build]
+target = "stable-x86_64-unknown-linux-gnu"
 
 [dev-dependencies]
 
