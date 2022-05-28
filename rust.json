@@ -173,7 +173,7 @@
 		"prefix": "ml.rand2",
 		"body": [
 			"use rand::random;",
-			"$1random()",			
+			"$1random()"			
 		],
 		"description": "cargo add rand"
 	},	
@@ -1218,6 +1218,17 @@
 		],
 		"description": "Creating a reference cycle of two List values pointing to each other"
 	},
+
+	
+
+	"Clippy swap": {
+		"prefix": "ml.swap",
+		"body": [		
+			"std::mem::swap(&mut a, &mut b);"			
+		],
+		"description": "If swapping is intended, use swap() instead:a = b;b = a;"
+	  },	  
+
 	  "Recursive types": {
 		"prefix": "ms.box.cons",
 		"body": [		
