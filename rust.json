@@ -1,9 +1,4 @@
 {
-	// Place your snippets for rust here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
 	"Attrs": {
 		"prefix": "ms.attr",
 		"body": [
@@ -43,7 +38,7 @@
 				"   }",
 			    "}",
 				"//Implement CreationError",
-				"mb.imp.error.self$5",
+				"mb.imp.error.self$5"
 		],
 		"description": "$1-$4  is the same name"
 	  },
@@ -62,7 +57,7 @@
 				"enum CreationError {",
 				"     field1,",
 				"     field2,",
-				"}",
+				"}"
 		],
 		"description": "$1-$3  is the same name"
 	  },
@@ -223,7 +218,7 @@
 			"            break \"outer;",
 			"        }",			
 			"     }",
-			"}",
+			"}"
 		],
 		"description": "Syntactic sugar ~ Higher-ranked trait bounds"
 	} ,
@@ -312,7 +307,7 @@
 	} ,	
 	
 	"Summery Trait on struct fields": {
-		"prefix": "ms.util.trait.sum",
+		"prefix": "ms.util.trait.summarize",
 		"body": [			
     		"pub trait Summary {",
 			"    fn summarize(&self) -> String;",
@@ -321,7 +316,7 @@
 			"    fn summarize(&self) -> String {",
 			"        format!($2{}$3,self.$3)",
 			"   }",
-			"}",
+			"}"
 		],
 		"description": " let mut counter = Counter::new();counter.incr();"
 	} ,
@@ -366,7 +361,7 @@
 	"Sum accumilator Fold": {
 		"prefix": "ms.util.fold",
 		"body": [			
-    		"(1..=num).into_iter().fold(0,|x,y| x+y)",        	
+    		"(1..=num).into_iter().fold(0,|x,y| x+y)"       	
 		],
 		"description": " sum item with next item"
 	} ,	   
@@ -381,7 +376,7 @@
 		"prefix": "ms.util.getaddress.struct",
 		"body": [
 			"let uc_address = uc_slice as *const UsageCounter as usize;",
-			"let size_of_uc = std::mem::size_of::<UsageCounter>();",	
+			"let size_of_uc = std::mem::size_of::<UsageCounter>();"
 		],
 		"description": "Return addr of a struct_slice"
 	} ,  
@@ -397,7 +392,7 @@
 			"   .takes_value(true)",
 			"   .required(true))",
 			" .get_matches();",			
-			"  let pattern = args.value_of(\"pattern\").unwrap();",
+			"  let pattern = args.value_of(\"pattern\").unwrap();"
 		],
 		"description": "Supporting command-line arguments exmp: cargo run -- patternvalue and then ./target/debug/grep-lite --help "
 	} ,
@@ -422,7 +417,7 @@
 			"impl Clone for StatusMessage {",
 			"  fn clone(&self) -> Self {",
 			"     *self",
-			"  }",
+			"  }"
 		],
 		"description": "With impl no need to use .clone()"
 	} ,	
@@ -442,7 +437,7 @@
 			"   base_2.x -= 12.34;",
 			"   println!($1base_2: {:?}$2, base_2);",
 			"  }",
-			"   println!($3base: {:?}$4, base);",
+			"   println!($3base: {:?}$4, base);"
 		],
 		"description": "wrapper type = reference-counted value = shared ownership =track valid references.Rc<T> does not allow mutation. To permit that, we need to wrap our wrapper. Rc<RefCell<T>>"
 	} ,	
@@ -466,7 +461,7 @@
 				"T: AsRef<str>,",
 				"{",
 				"arg.as_ref().as_bytes().len()",
-			"}",
+			"}"
 		],
 		"description": "AsRef Generic to Where style"
 } ,		
@@ -476,7 +471,7 @@
 		"use std::ops::{$1};", 		
  		"fn $2<T: $3<Output = T>>(i: T, j: T) -> T {",
    		"     i.$4(j)",
- 		"}",
+ 		"}"
 		],
 		"description": "a trait bound = T: $3<Output = T>>. During the compilation process, a + b is converted to a.add(b)"
 	} ,	
@@ -503,7 +498,7 @@
    "Println fmt macro": {
 	"prefix": "ml.pr",
 	"body": [
-		"println!($1Printed:{:?}$2,$3);",
+		"println!(\"Printed:{:?}\",$1);",
 		"$4"
 	],
 	"description": "print formated to console"
@@ -537,7 +532,7 @@
 		"              y: other.y,",
 		"             }",
 		"       }",
-		"}",
+		"}"
 		],
 		"description": "p1.mixup(p2); A method that uses different generic types from its struct’s definition"
 	} ,	
@@ -554,7 +549,7 @@
 			"        }",
 			"      }",
     		"   result",
-			"}",
+			"}"
 		],
 		"description": "This specifies that the reference on i32 in the Fn trait bound can have any lifetime."
 	} ,	
@@ -574,7 +569,7 @@
 			"       self.y += self.w;",
 			"       Some(res)",
 			"    }",
-			"}",
+			"}"
 		],
 		"description": "You can see e.g iterator implement"
 	} ,	
@@ -588,7 +583,7 @@
 			  "impl $6Name for $7StructName {",
 			  "fn $8name(){",
 			  " Ok(())",
-			  "}",
+			  "}"
 		],
 		"description": "Trait block"
 	} ,	
@@ -653,7 +648,7 @@
 		"prefix": "ms.use.explicit.reduce.path",
 		"body": [
 			"use crate::Status::{X, Y};",
-			"let status = X;",			
+			"let status = X;"	
 		],
 		"description": "Exmp Union sth::sth reduced to just sth"
 	} ,
@@ -661,7 +656,7 @@
 		"prefix": "ms.mem.addr.get",
 		"body": [
 			"let uc_address = uc_slice as *const UsageCounter as usize;",
-			"let size_of_uc = std::mem::size_of::<UsageCounter>();",	
+			"let size_of_uc = std::mem::size_of::<UsageCounter>();"
 		],
 		"description": "Return addr of a struct_slice"
 	} ,
@@ -669,7 +664,7 @@
 		"prefix": "ml.cast.nonprimitive",
 		"body": [
 			"let uc_address = uc_slice as *const UsageCounter;",
-			"let size_of_uc = std::mem::size_of::<UsageCounter>();",	
+			"let size_of_uc = std::mem::size_of::<UsageCounter>();"
 		],
 		"description": "Return addr of a struct_slice"
 	} ,
@@ -687,7 +682,7 @@
 		"prefix": "ms.mem.size",
 		"body": [
 			"let xs: [i32; 5] = [1, 2, 3, 4, 5];",
-			"ml.pr$1 mem::size_of_val(&xs));",			
+			"ml.pr$1 mem::size_of_val(&xs));"
 		],
 		"description": "Return num of bytes"
 	} ,
@@ -695,7 +690,7 @@
 		"prefix": "ml.string.to_owned",
 		"body": [
 			"let $1  = $2::$3($4my text.to_owned())",				
-			"$5",
+			"$5"
 		],
 		"description": "Expected struct `String`, found `&str`"
 	} ,
@@ -855,21 +850,21 @@
 	"IO/READ": {
 		"prefix": "ml.io.read.dyn",
 		"body": [		
-			    "&mut dyn io::BufRead",
+			    "&mut dyn io::BufRead"
 		],
 		"description": "Dynamic Read for onvert to binary"
 	  },	
 	  "IO/READER/NEW": {
 		"prefix": "ml.io.read.new",
 		"body": [		
-			    "let mut $1 = io::BufReader::new($2yourstr.as_bytes());",
+			    "let mut $1 = io::BufReader::new($2yourstr.as_bytes());"
 		],
 		"description": "New for convert to binary"
 	  },	
 	  "IO/READER/DEBINARY": {
 		"prefix": "ml.io.read.line",
 		"body": [		
-			    "$1yourbinaryvariable.read_line(&mut $2forexmp_str_var)?;",
+			    "$1yourbinaryvariable.read_line(&mut $2forexmp_str_var)?;"
 		],
 		"description": "Get DeBinary"
 	  },	
@@ -959,9 +954,28 @@
 		"description": "Todo Later sth"
 	  },
 
+	  "Convert bytes to ux": {
+		"prefix": ["ml.convert.vec.to.num","ml.fromv.ec.to.num"],
+		"body": [			
+			"pub fn difficulty_bytes_as_u128 (v: &Vec<u8>) -> u128 {",
+	   		"   ((v[31] as u128) << 0xf * 8) |",
+	   		"   ((v[16] as u128) << 0x0 * 8)",
+	  		"}"
+		],
+		"description": "Convert ux to [ux;x]"
+	  },	  	  
 
-
-	  
+	  "Convert num to bytes slice segment": {
+		"prefix": ["ml.convert.num.to.bytes","ml.from.num.to.sclice"],
+		"body": [			
+			"pub fn u64_bytes (u: &u64) -> [u8; 8] {",
+			"  [",
+			"   (u >> 8 * 0x0) as u8,",
+			"  ]",
+			"}"
+		],
+		"description": "Convert ux to [ux;x]"
+	  },	  
 	  "Convert Range to Vector": {
 		"prefix": "ml.convert.range_to_vec",
 		"body": [			
@@ -1030,7 +1044,7 @@
 			"       FileState::Closed => write!(f, $2),",
 			"      }",
 			"   }",
-			" }",
+			" }"
 		],
 		"description": "Partial Equal Implement Method"
 	  },
@@ -1094,7 +1108,7 @@
 	  "Error Dynamic Box": {
 		"prefix": "ml.error.dyn.box",
 		"body": [		
-			    "Box<dyn error::Error>",
+			    "Box<dyn error::Error>"
 		],
 		"description": "The Box<dyn Error> type is called a trait object, Runtime Error by Box dyn"
 	  },		      
@@ -1173,7 +1187,7 @@
 		"   parent: RefCell::new(Weak::new()),",
 		"   children: RefCell::new(vec![Rc::clone(&leaf)]),",
 		"});",
-		"*leaf.parent.borrow_mut() = Rc::downgrade(&branch);",
+		"*leaf.parent.borrow_mut() = Rc::downgrade(&branch);"
 		],
 		"description": "Creating branch in an inner scope and examining strong and weak reference counts"
 	},
@@ -1212,7 +1226,7 @@
 			"   Cons(i32, Box<List>),",
 			"   Nil,",
 			"}",
-			"let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));",
+			"let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));"
 			
 		],
 		"description": "Cons is just a name and it is replacable with anyname"
@@ -1261,7 +1275,7 @@
 			"let pause = time::Duration::from_millis($1);",
 			"while start.elapsed() < pause {",
 			"  thread::yield_now();",
-			"}",
+			"}"
 		],
 		"description": "also known as busy loop and spin loop-If you want to sleep pause a thread for short amounts of time, or if your application is sensitive to timing, use a spin loop"
 	  },
@@ -1287,7 +1301,7 @@
 				" }",
 				" v.swap(i, pivot);",
 				" i",
-				"}",
+				"}"
 		  ],
 		  "description": "Send is require because we have jump from quick func(thread a) to part func(thread b) frequently"
 		},
@@ -1299,7 +1313,7 @@
 				"thread::spawn(move || {",    
 				"    tx.send(val).unwrap();",
 				"});",
-				"let received = rx.recv().unwrap();",
+				"let received = rx.recv().unwrap();"
 			],
 			"description": "Channel thread"
 		  },	  		
@@ -1319,8 +1333,8 @@
 				"while status.jobs_completed.load(Ordering::Relaxed) < 10 {",
 				"   println!(\"waiting... \");",
 				"   thread::sleep(Duration::from_millis(500));",
-				"}",
+				"}"
 			],
 			"description": "An alternative to yielding is to use the function std::sync::atomic::spin_loop _hint(). spin_loop_hint() avoids the OS; instead, it directly signals the CPU. A CPU might use that hint to turn off functionality, thus saving power usage."
-		},
+		}
 }
