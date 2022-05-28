@@ -1,4 +1,6 @@
 {
+    "rust-analyzer.cargo.features": ["rust-all-in-one"],
+    "rust-analyzer.updates.askBeforeDownload": false,
     "editor.inlayHints.fontFamily": "Courier New",
     "editor.inlayHints.fontSize": 11,
   
