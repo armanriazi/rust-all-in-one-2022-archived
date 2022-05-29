@@ -1,61 +1,76 @@
-// Example 4: Ownership and references
 
-#[derive(Copy, Clone)]
-struct Thing {
-    label: char,
-    count: i32,
+
+pub trait Summary {
+    fn summarize_author(&self) -> String;
+
+    fn summarize(&self) -> String {
+        format!("(Read more from {}...)", self.summarize_author())
+    }
 }
 
-fn print_thing_val(x: Thing) {
-    // (This is the same code we were looking at before.)
-    println!("the count of {} is {}", x.label, x.count);
+pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
 }
 
-fn print_thing_ref(x: &Thing) {
-    //                ^~ this is a "reference type constructor"
-    //                   `&T` is pronounced "(shared) reference to T"
-    println!("the count of `{}` is {}", x.label, x.count);
-
-    let Thing { label, count } = *x;
-    println!("another way to bind (`{}` still {})", label, count);
-
-    let &Thing { label, count } = x;
-    println!("even &pat is a pattern (and `{}` still {})", label, count);
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
 }
 
-fn print_thing_box(x: Box<Thing>) {
-    //                      ^~~ This is another type constructor
-    //                          (One of many library-provided "smart-pointers")
-    //                          `Box<T>` is pronounced "boxed T"
-    println!("the count of {} is {}", x.label, x.count);
+impl Summary for Tweet {
+    fn summarize_author(&self) -> String {
+        format!("@{}", self.username)
+    }
+    
 }
 
-pub fn main() {
-    // stack-allocated, as before
-    let t1 = Thing { label: 'a', count: 5 };
+impl Summary for NewsArticle {
+   
 
-    // These two calls have the same side-effects ...
-    print_thing_val(t1);
-    print_thing_ref(&t1);
-    // ... but they do their work in very diferrent ways.
-
-    // *heap*-allocated Thing
-    let t2 = Box::new(Thing { label: 'b', count: 4 });
-    print_thing_box(t2);
-
-    // EXERCISE: Add code below here to print both `t1` and `t2`
-    // again.  Discuss.
+    fn summarize_author(&self) -> String {
+        format!("@{}", self.headline)
+    }
 }
 
+//use aggregator::{Summary, Tweet};
 
-// Box<Thing> behaves very differently from `Thing` and `&Thing`.
-//
-// A detail we've been avoiding due to something special with `Thing`.
-//
-// But it is *not* something special about `Box`; it is *Thing* that
-// is special; discuss.
+//**fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 { */
+/* 
+fn some_function<T, U>(t: &T, u: &U) -> i32
+    where T: Display + Clone,
+          U: Clone + Debug
+{
+*/
+pub fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+//pub fn notify(item1: &impl Summary, item2: &impl Summary) {
+    
+fn main() {
+    let tweet = Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        retweet: false,
+    };
 
+    let article = NewsArticle {
+        headline: String::from("Penguins win the Stanley Cup Championship!"),
+        location: String::from("Pittsburgh, PA, USA"),
+        author: String::from("Iceburgh"),
+        content: String::from(
+            "The Pittsburgh Penguins once again are the best \
+             hockey team in the NHL.",
+        ),
+    };
 
-// EXERCISE: add a new function, `increment_count`, that takes a
-// `Thing` and adds 1 to its count field in a way that the *caller*
-// can observe.
+    notify(&tweet);
+    println!("New article available! {}", article.summarize());
+}

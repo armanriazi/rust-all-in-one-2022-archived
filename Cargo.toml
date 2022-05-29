@@ -46,7 +46,7 @@ members = [
 # core = { path = "core" }
 
 
-
+#cargo-graph = "0.3.1"
 # UI
 console = "0.15.0"
 indicatif = "0.16.2"
