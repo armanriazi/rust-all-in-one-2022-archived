@@ -45,7 +45,7 @@ members = [
 #examples-tourofrust = { path = "examples-tourofrust"}
 # core = { path = "core" }
 
-
+minigrep = "0.1.0"
 #cargo-graph = "0.3.1"
 # UI
 console = "0.15.0"
