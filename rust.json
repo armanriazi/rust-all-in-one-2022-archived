@@ -1262,6 +1262,48 @@
 		],
 		"description": "Get id thread"
 	  },
+
+	  "Functional Programming Closure": {
+		"prefix": "ms.closure.Fn",
+		"body": [		
+			"struct Cacher<T>",
+			"where",
+			"  T: Fn(u32) -> u32,",
+			"{",
+			"   calculation: T,",
+			"   value: Option<u32>,",
+			"}",
+			"impl<T> Cacher<T>",
+			"where",
+			"   T: Fn(u32) -> u32,",
+			"{",
+			"   fn new(calculation: T) -> Cacher<T> {",
+			"      Cacher {",
+			"           calculation,",
+			"           value: None,",
+			"       }",
+			"}",
+			"fn value(&mut self, arg: u32) -> u32 {",
+			"   match self.value {",
+			"         Some(v) => v,",
+			"         None => {",
+			"             let v = (self.calculation)(arg);",
+			"             self.value = Some(v);",
+			"             v",
+			"            }",
+			"        }",
+			"    }",
+			"}",
+			"#[test]",
+			"fn call_with_different_values() {",
+			"   let mut c = Cacher::new(|a| a);",
+			"   let v1 = c.value(1);",			
+			"   assert_eq!(v1, 1);",
+			"}",
+		],
+		"description": "Instead of saving the closure in a variable directly, we save a new instance of Cacher that holds the closure. "
+	  },
+
 	  "Spawn thread with move": {
 		"prefix": "ms.thread.spw",
 		"body": [		
