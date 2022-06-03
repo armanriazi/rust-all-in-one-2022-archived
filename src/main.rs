@@ -2,7 +2,6 @@ use std::env;
 use std::error::Error;
 use std::fs;
 
-<<<<<<< HEAD
 pub struct Config {
     pub query: String,
     pub filename: String,
@@ -51,7 +50,6 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
         if line.contains(query) {
             results.push(line);
         }
-=======
 static N:i32 = 15;
 
 
@@ -77,7 +75,6 @@ pub fn add_stat(n:i32)->i32 {
     unsafe {
         M += n;
         M
->>>>>>> be2bc5a0fba5638962dbe97bb0b415d71f8bd828
     }
 
     results
