@@ -3,13 +3,9 @@
 ///![allow(clippy::some_lint, reason = "False positive rust-lang/rust-clippy#1002020")]
 /// #
 
-```
-fn main() {
-    let y = {
-        let x = 3;
-        x + 1
-    };
+//#![allow(unused)]
+//#![crate_name = "rust_all_in_one"]
 
-    println!("The value of y is: {}", y);
-}
-```
+///#[cfg_attr(target_os = "linux", path = "main.rs")]
+//#[cfg(panic = "unwind")] ////#[cfg(panic = "abort")]
+//#[cfg_attr(feature = "blockchain", transaction, block)]
