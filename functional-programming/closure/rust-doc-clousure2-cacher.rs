@@ -59,6 +59,10 @@ fn generate_workout(intensity: u32, random_number: u32) {
                 "Today, run for {} minutes!",
                 expensive_result.value(intensity)
             );
+            println!(
+                "Today, run for {} minutes!",
+                expensive_result.value(9)
+            );
         }
     }
 }
