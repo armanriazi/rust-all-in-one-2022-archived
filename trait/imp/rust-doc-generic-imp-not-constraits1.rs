@@ -21,3 +21,18 @@ impl<T, U> Struct where U: HasAssocType<Ty = T> { /* ... */ }
 // T is used in the bounds, but not as an associated type, so it does not constrain.
 impl<T, U> GenericTrait<U> for u32 where U: GenericTrait<T> {}
 }
+
+/* 
+Example of an allowed unconstraining lifetime parameter:
+*/
+
+
+impl<'a> Struct {}
+/* 
+Example of a disallowed unconstraining lifetime parameter:
+*/
+
+
+impl<'a> HasAssocType for Struct {
+    type Ty = &'a Struct;
+}
