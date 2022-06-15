@@ -17,4 +17,5 @@ trait TraitMethods {
 struct S;
 impl TraitMethods for S {}
 let t: Box<dyn TraitMethods> = Box::new(S);
+//t.callable since object safe dispatchable
 }
