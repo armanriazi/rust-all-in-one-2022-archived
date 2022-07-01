@@ -1,0 +1,17 @@
+coverage:
+  status:
+    project:
+      default:
+        informational: true
+    patch:
+      default:
+        informational: true
+comment:                  # this is a top-level key
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: false  # if true: only post the comment if coverage changes
+  require_base: no        # [yes :: must have a base report to post]
+  require_head: yes       # [yes :: must have a head report to post]
+
+# When modifying this file, please validate using
+# curl -X POST --data-binary @codecov.yml https://codecov.io/validate

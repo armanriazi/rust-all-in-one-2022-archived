@@ -1,24 +1,45 @@
-use std::time::SystemTime;
 
-struct PositiveBackend;
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use lazy_static::lazy_static;
+    use std::sync::atomic::{AtomicI32, Ordering};
+    use log::{debug, error, log_enabled, info, Level};    
+    extern crate log;
+    lazy_static! {
+        static ref COUNT: AtomicI32 = AtomicI32::new(0);
+    }
+    fn init() {
+        
+        let _ = env_logger::builder().is_test(true).try_init();        
+        if log_enabled!(Level::Info) {            
+            info!("Welcome to env_logger");
+        }
+    }
 
-impl PositiveBackend{
-    fn compute(&self, number: u64) -> u64{
-        number+1
+    #[test]
+    fn it_adds_one() {
+        init();
+        info!("can log from the test too");        
+    }
+    #[test]
+    fn test_count() {
+        COUNT.fetch_add(1, Ordering::SeqCst);
+        info!("test_count");        
+        test_count2();
+    }
+    #[test]
+    fn test_count2() {
+        COUNT.fetch_add(1, Ordering::SeqCst);
+        info!("test_count2");        
+    }
+    #[test]
+    fn test_count3() {
+        COUNT.fetch_add(1, Ordering::SeqCst);
+        info!("test_count3");        
     }
 }
 
-fn main() {
-    let backend = Box::new(PositiveBackend);
-    let mut res= 0 as u64;
-    let start_time = SystemTime::now();
-    let total = 20_000_000 as u64;
-    
-    // our main loop
-    for i in 0 .. total {
-        res += backend.compute(i);
-    }
 
-    println!("Result: {}",res);
-    println!("Elapsed_ms: {}", start_time.elapsed().unwrap().as_millis());
-}
+extern crate log;
+fn main(){}    

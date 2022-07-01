@@ -22,5 +22,6 @@ fn main() {
         part: first_sentence,
     };
     println!("{}",i.level());
-    i.announce_and_return_part("my announce");
+    println!("{}",i.announce_and_return_part("my announce"););
+    
 }
