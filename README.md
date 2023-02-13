@@ -1,4 +1,7 @@
 # Rust-All-In-One
+
+# **Converted to a private modular repository with more than 500 samples of a few books/references**
+
 ### Included All Toturials(Important Sections)
 
 # How to Contribute
