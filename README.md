@@ -1,7 +1,7 @@
 # Rust-All-In-One
 
 # **Converted to a private modular repository with more than 400 samples of a few books/references**
-> This repository have got more than 400 sample that collected more than 6 significant reference. I made a customize online book that contains md-files and you can search for any gathered concept. I was wondering if you want it please contact me. To gain access online book has value of 200$.
+> _This repository have got more than 400 sample that collected more than 6 significant reference. I made a customize online book that contains md-files and you can search for any gathered concept. I was wondering if you want it please contact me_. **To gain access online book has value of 200$.**
 
 ### Included All Toturials(Important Sections)
 
